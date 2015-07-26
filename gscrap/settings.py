@@ -46,6 +46,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social.apps.django_app.default',
+    'gscrapweb',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -64,7 +66,7 @@ ROOT_URLCONF = 'gscrap.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,12 +74,41 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'gscrap.wsgi.application'
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "380183775330-a93oui632sm6vmmurrn5ptbe239ml599.apps.googleusercontent.com"
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "kMMLbJ7z3x9xOft5MGynaou3"
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE=["https://www.googleapis.com/auth/youtube","https://www.googleapis.com/auth/gmail.readonly"]
+
+
+SOCIAL_AUTH_SOUNDCLOUD_KEY = "2e45f18b4dd8d3a67abebfa6c79ad8e0"
+
+SOCIAL_AUTH_SOUNDCLOUD_SECRET = "4280bf11630a91413fba77222f3f8005"
+
+
+AUTH_USER_MODEL = "gscrapweb.CustomUser"
+
+
+GOOGLE_OAUTH2_USE_UNIQUE_USER_ID = True
+
+
+AUTHENTICATION_BACKENDS = (
+   'social.backends.google.GoogleOAuth2',
+    'social.backends.soundcloud.SoundcloudOAuth2',
+    'django.contrib.auth.backends.ModelBackend'
+
+)
+
 
 
 # Database
@@ -108,4 +139,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, "public","production")
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "public","assets"),
+    #'/var/www/static/',
+)
