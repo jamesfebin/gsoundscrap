@@ -59,7 +59,30 @@ def remove_tags(text):
 	TAG_RE = re.compile(r'<[^>]+>')
 	return TAG_RE.sub('', text)
 
-def fetch_and_parse_url_from_messages(messages_ids,access_token,email):
+def fetch_youtube_video_info(url):
+	response = requests.get(
+			'http://www.youtube.com/oembed',
+			 params={'url': url,'format': 'json'}
+			)
+
+	if response.status_code == 200:
+		youtube_details = json.loads(response.text)
+		title = thumbnail = author_url = author_name = ''
+		if 'title' in youtube_details:
+			title =  youtube_details['title'].encode('ascii','ignore') 
+			print title
+		if 'thumbnail' in youtube_details:
+			thumbnail = youtube_details['thumbnail_url']
+			print thumbnail
+		if 'author_name' in youtube_details:
+			author_name = youtube_details['author_name']
+			print author_name
+		if 'author_url' in youtube_details:
+			author_url = youtube_details['author_url']
+			print author_url
+
+
+def fetch_youtube_video_ids(messages_ids,access_token,email):
 	for message in messages_ids:
 		response = requests.get(
 			'https://www.googleapis.com/gmail/v1/users/'+email+'/messages/'+message['id'],
@@ -92,7 +115,7 @@ def sync(request):
 			if response.status_code == 200:
 				youtube_emails = json.loads(response.text)
 				if 'messages' in youtube_emails:
-					fetch_and_parse_url_from_messages(youtube_emails['messages'],google.extra_data['access_token'],google.uid)
+					fetch_youtube_video_ids(youtube_emails['messages'],google.extra_data['access_token'],google.uid)
 			else:
 				print json.loads(response.text)
 	return render_to_response('sync.html')
