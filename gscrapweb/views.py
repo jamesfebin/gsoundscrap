@@ -5,7 +5,6 @@ from social.apps.django_app.default.models import UserSocialAuth
 import requests
 import json
 import base64
-import bs4
 import re
 # Create your views here.
 
@@ -55,6 +54,10 @@ def parse_video_id(value):
     # fail?
     return ''
 
+def remove_tags(text):
+	TAG_RE = re.compile(r'<[^>]+>')
+	return TAG_RE.sub('', text)
+
 def fetch_and_parse_url_from_messages(messages_ids,access_token,email):
 	for message in messages_ids:
 		response = requests.get(
@@ -63,8 +66,7 @@ def fetch_and_parse_url_from_messages(messages_ids,access_token,email):
 			)
 		message = json.loads(response.text)
 		message = base64.urlsafe_b64decode(message['raw'].encode('UTF-8'))
-		soup = bs4.BeautifulSoup(message) 
-		message = soup.body.getText() 
+		message = remove_tags(message)
 		message = message.replace('\n',' ')
 		message = message.replace('\r',' ')
 		urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', t)
