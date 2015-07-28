@@ -1,2 +1,2 @@
-web: gunicorn gscrap.wsgi --log-file -
+web: gunicorn gscrap.wsgi --timeout 400 --log-file -
 
