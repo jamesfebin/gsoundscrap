@@ -76,7 +76,7 @@ def fetch_youtube_video_info(url,user):
 		if 'title' in youtube_details:
 			title =  youtube_details['title'].encode('ascii','ignore') 
 			print title
-		if 'thumbnail' in youtube_details:
+		if 'thumbnail_url' in youtube_details:
 			thumbnail = youtube_details['thumbnail_url']
 			print thumbnail
 		if 'author_name' in youtube_details:
