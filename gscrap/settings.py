@@ -101,6 +101,10 @@ AUTH_USER_MODEL = "gscrapweb.CustomUser"
 
 GOOGLE_OAUTH2_USE_UNIQUE_USER_ID = True
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {
+    'access_type': 'offline',
+    'approval_prompt': 'auto'
+}
 
 AUTHENTICATION_BACKENDS = (
    'social.backends.google.GoogleOAuth2',

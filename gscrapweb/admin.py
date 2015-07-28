@@ -4,6 +4,6 @@ from models import Track
 
 
 class TracksAdmin(admin.ModelAdmin):
-      list_display    = ['track_type', 'author', 'author_link', 'link','title']
+      list_display    = ['track_type','thumbnail', 'author', 'author_link', 'link','title']
 
 admin.site.register(Track, TracksAdmin)
