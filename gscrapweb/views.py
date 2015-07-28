@@ -81,11 +81,11 @@ def fetch_youtube_video_info(url,user_id):
 		if 'author_url' in youtube_details:
 			author_url = youtube_details['author_url']
 			print author_url
-		track = Tracks.objects.get(link=url,user_id=user_id)
-
-		if not track:
+		try:
+			track = Tracks.objects.get(link=url,user_id=user_id)
+		except Tracks.DoesNotExist:
 			Tracks.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user_id)
-			
+
 
 
 
