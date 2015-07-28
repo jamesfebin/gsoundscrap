@@ -30,7 +30,7 @@ def home(request):
 
 def sync(request):
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
-		instance = UserSocialAuth.objects.get(user=request.user.get_username())
+		instance = UserSocialAuth.objects.get(user=request.user)
 		print instance
 		return render_to_response('sync.html')
 		'''
