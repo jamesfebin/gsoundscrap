@@ -1,9 +1,9 @@
 from django.contrib import admin
-from models import Tracks
+from models import Track
 # Register your models here.
 
 
 class TracksAdmin(admin.ModelAdmin):
-      list_display    = ['type', 'author', 'author_link', 'link','title']
+      list_display    = ['track_type', 'author', 'author_link', 'link','title']
 
-admin.site.register(Tracks, TracksAdmin)
+admin.site.register(Track, TracksAdmin)

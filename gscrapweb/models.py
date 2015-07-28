@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 class CustomUser(AbstractUser):
 	pass
 
-class Tracks(models.Model):
+class Track(models.Model):
 	author = models.TextField()
 	author_link = models.TextField()
 	track_type = models.TextField()
