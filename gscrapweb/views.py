@@ -11,7 +11,7 @@ import urlparse
 # Create your views here.
 
 def home(request):
-
+	tracks = []
 	soundcloud = False
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		try:
@@ -23,7 +23,7 @@ def home(request):
 			#Nothing to worry , Sound cloud isn't connected
 			print e
 
-	tracks = Track.objects.filter(user_id=request.user.id)
+		tracks = Track.objects.filter(user_id=request.user.id)
 
 	context = RequestContext(request,
                            {'user': request.user,'soundcloud':soundcloud,'tracks':tracks})
