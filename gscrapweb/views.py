@@ -69,11 +69,13 @@ def fetch_and_parse_url_from_messages(messages_ids,access_token,email):
 		message = remove_tags(message)
 		message = message.replace('\n',' ')
 		message = message.replace('\r',' ')
-		urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', t)
+		urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
 		for url in urls:
 			video_id = parse_video_id(url) 
 			if video_id != '':
 				print video_id
+				print url
+			else:
 				print url
 
 def sync(request):
