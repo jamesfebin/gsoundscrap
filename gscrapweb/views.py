@@ -159,6 +159,27 @@ def sync(request):
 					fetch_youtube_video_ids(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user)
 			else:
 				print json.loads(response.text)
+
+			query = 'soundcloud.com'
+
+			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
+			if response.status_code == 200:
+				youtube_emails = json.loads(response.text)
+				if 'messages' in youtube_emails:
+					fetch_youtube_video_ids(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user)
+			else:
+				print json.loads(response.text)
+
+			query = 'youtu.be'
+
+			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
+			if response.status_code == 200:
+				youtube_emails = json.loads(response.text)
+				if 'messages' in youtube_emails:
+					fetch_youtube_video_ids(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user)
+			else:
+				print json.loads(response.text)
+
 	return render_to_response('sync.html')
 
 
