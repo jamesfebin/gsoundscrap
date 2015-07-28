@@ -42,7 +42,7 @@ def sync(request):
 			query = 'youtube.com'
 
 			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
-			if response.status == 200:
+			if response.status_code == 200:
 				youtube_emails = json.loads(response.text)
 				print youtube_emails
 			else:
@@ -50,7 +50,7 @@ def sync(request):
 
 			query = 'soundcloud.com'
 			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
-			if response.status == 200:
+			if response.status_code == 200:
 				soundcloud_emails = json.loads(response.text)
 				print soundcloud_emails
 			else:
