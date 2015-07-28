@@ -24,11 +24,43 @@ def home(request):
 	return render_to_response('home.html',context_instance=context)
 
 
+def fetch_from_gmail(access_token,email,query,start,end):
+	access_token = google.extra_data['access_token']
+			response = requests.get(
+			    'https://www.googleapis.com/gmail/v1/users/'+email+'/messages',
+			    params={'access_token': 'ya29.vgFEY0uezVNr7Zmtusrwr51VZzVLq83xH6D-oEpjC2uI3NnUddDp3XIQbvmWrk2tJX_bjw','q': query + ' after:'+start +' before:'+end}
+			)
+	return response
+
+
 def sync(request):
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
-		user = UserSocialAuth.objects.get(user=request.user,provider="google-oauth2")
-		print user.extra_data
-		print user.uid
+		google = UserSocialAuth.objects.get(user=request.user,provider="google-oauth2")
+		print google.extra_data
+		print google.uid
+
+		start = '2010/01/01'
+		end = '2015/06/30'
+		query = 'youtube.com'
+
+		if google:
+			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
+			if response.status == 200:
+				youtube_emails = json.loads(response.text)
+				print youtube_emails
+			else:
+				print json.loads(response.text)
+
+			query = 'soundcloud.com'
+			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
+			if response.status == 200:
+				soundcloud_emails = json.loads(response.text)
+				print soundcloud_emails
+			else:
+				print json.loads(response.text)
+
+			
+
 		return render_to_response('sync.html')
 		'''
 		google = request.user.social_auth.get(provider='google-oauth2')
@@ -38,7 +70,11 @@ def sync(request):
 			    'https://www.googleapis.com/gmail/v1/users/'+email+'/messages',
 			    params={'access_token': 'ya29.vgFEY0uezVNr7Zmtusrwr51VZzVLq83xH6D-oEpjC2uI3NnUddDp3XIQbvmWrk2tJX_bjw','q':' boutline after:2010/01/01 before:2015/06/30'}
 			)
-
+		access_token = google.extra_data['access_token']
+			response = requests.get(
+			    'https://www.googleapis.com/gmail/v1/users/'+email+'/messages',
+			    params={'access_token': 'ya29.vgFEY0uezVNr7Zmtusrwr51VZzVLq83xH6D-oEpjC2uI3NnUddDp3XIQbvmWrk2tJX_bjw','q':' boutline after:2010/01/01 before:2015/06/30'}
+			)
 		
 		'''
 
