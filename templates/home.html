@@ -76,6 +76,8 @@
       {% for track in tracks %}
 
         <div class="col-md-4">
+        {{track.embed}}
+        <!--
           <p><img src="{{track.thumbnail}}"  class="img-thumbnail"></p>
           <span> {{track.title}} </span>
 
@@ -85,6 +87,7 @@
           <p> <a class="btn btn-danger" href="{{track.link}}" role="button">Watch Video</a>
           {% endif %}
           <p><a class="btn btn-default" href="{{track.author_link}}" role="button">{{track.author}}</a></p>
+          -->
         </div>
    
 

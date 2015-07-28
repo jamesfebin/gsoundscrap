@@ -65,6 +65,7 @@ def remove_tags(text):
 	return TAG_RE.sub('', text)
 
 def fetch_youtube_video_info(url,user):
+	print url
 	response = requests.get(
 			'http://www.youtube.com/oembed',
 			 params={'url': url,'format': 'json'}
