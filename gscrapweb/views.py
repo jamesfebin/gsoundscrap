@@ -33,10 +33,10 @@ def fetch_from_gmail(access_token,email,query,start,end):
 	return response
 
 def fetch_and_parse_url_from_messages(messages_ids,access_token):
-	for message in messages:
+	for message in messages_ids:
 		response = requests.get(
 			'https://www.googleapis.com/gmail/v1/users/'+email+'/messages/'+message['id'],
-			 params={'access_token': access_token,'q': query + ' after:'+start +' before:'+end}
+			 params={'access_token': access_token,'format': 'full'}
 			)
 		print json.loads(response.text)
 		break
@@ -59,7 +59,7 @@ def sync(request):
 				print json.loads(response.text)
 	return render_to_response('sync.html')
 
-	
+
 
 '''
 
