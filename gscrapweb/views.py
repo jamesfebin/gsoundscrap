@@ -5,6 +5,8 @@ from social.apps.django_app.default.models import UserSocialAuth
 import requests
 import json
 import base64
+import bs4
+import re
 # Create your views here.
 
 def home(request):
@@ -19,8 +21,6 @@ def home(request):
 		except Exception, e:
 			#Nothing to worry , Sound cloud isn't connected
 			print e
-
-
 	context = RequestContext(request,
                            {'user': request.user,'soundcloud':soundcloud})
 	return render_to_response('home.html',context_instance=context)
@@ -33,18 +33,46 @@ def fetch_from_gmail(access_token,email,query,start,end):
 			)
 	return response
 
+def parse_video_id(value):
+    """
+    Examples:
+    - http://youtu.be/SA2iWivDJiE
+    - http://www.youtube.com/watch?v=_oPAwA_Udwc&feature=feedu
+    - http://www.youtube.com/embed/SA2iWivDJiE
+    - http://www.youtube.com/v/SA2iWivDJiE?version=3&amp;hl=en_US
+    """
+    query = urlparse(value)
+    if query.hostname == 'youtu.be':
+        return query.path[1:]
+    if query.hostname in ('www.youtube.com', 'youtube.com'):
+        if query.path == '/watch':
+            p = parse_qs(query.query)
+            return p['v'][0]
+        if query.path[:7] == '/embed/':
+            return query.path.split('/')[2]
+        if query.path[:3] == '/v/':
+            return query.path.split('/')[2]
+    # fail?
+    return ''
+
 def fetch_and_parse_url_from_messages(messages_ids,access_token,email):
 	for message in messages_ids:
 		response = requests.get(
 			'https://www.googleapis.com/gmail/v1/users/'+email+'/messages/'+message['id'],
 			 params={'access_token': access_token,'format': 'raw'}
 			)
-		print 'sup'
 		message = json.loads(response.text)
-		print message
-		message = base64.urlsafe_b64decode(message['raw'].encode('ASCII'))
-		print message
-		break
+		message = base64.urlsafe_b64decode(message['raw'].encode('UTF-8'))
+		soup = bs4.BeautifulSoup(message) 
+		message = soup.body.getText() 
+		message = message.replace('\n',' ')
+		message = message.replace('\r',' ')
+		urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', t)
+		for url in urls:
+			video_id = parse_video_id(url) 
+			if video_id != '':
+				print video_id
+				print url
 
 def sync(request):
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
@@ -67,6 +95,12 @@ def sync(request):
 
 
 '''
+
+	response = requests.get(
+			'https://www.googleapis.com/gmail/v1/users/jamesfebin%40gmail.com/messages/14c6735174c40b02',
+			 params={'access_token': 'ya29.vgFgiO_EJBS7MD12iKu7894OxZ8I3nVouT6PIEr5lFK1bSQejCNQw6TME_oTbSuzpZJC2g','format': 'raw'}
+			)
+
 
 
 
