@@ -32,6 +32,14 @@ def fetch_from_gmail(access_token,email,query,start,end):
 			)
 	return response
 
+def fetch_and_parse_url_from_messages(messages_ids,access_token):
+	for message in messages:
+		response = requests.get(
+			'https://www.googleapis.com/gmail/v1/users/'+email+'/messages/'+message['id'],
+			 params={'access_token': access_token,'q': query + ' after:'+start +' before:'+end}
+			)
+		print json.loads(response.text)
+		break
 
 def sync(request):
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
@@ -45,9 +53,21 @@ def sync(request):
 			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
 			if response.status_code == 200:
 				youtube_emails = json.loads(response.text)
-				print youtube_emails
+				if 'messages' in youtube_emails:
+					fetch_and_parse_url_from_messages(youtube_emails['messages'],google.extra_data['access_token'])
 			else:
 				print json.loads(response.text)
+'''
+
+			query = 'youtu.be'
+			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
+			if response.status_code == 200:
+				youtube_emails = json.loads(response.text)
+				if 'messages' in youtube_emails:
+					fetch_and_parse_url_from_messages(youtube_emails['messages'],google.extra_data['access_token'])
+			else:
+				print json.loads(response.text)
+
 
 			query = 'soundcloud.com'
 			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
@@ -56,7 +76,7 @@ def sync(request):
 				print soundcloud_emails
 			else:
 				print json.loads(response.text)
-
+'''
 			
 
 		return render_to_response('sync.html')
