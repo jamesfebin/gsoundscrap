@@ -4,6 +4,7 @@ from django.template.context import RequestContext
 from social.apps.django_app.default.models import UserSocialAuth
 import requests
 import json
+import base64
 # Create your views here.
 
 def home(request):
@@ -36,9 +37,11 @@ def fetch_and_parse_url_from_messages(messages_ids,access_token,email):
 	for message in messages_ids:
 		response = requests.get(
 			'https://www.googleapis.com/gmail/v1/users/'+email+'/messages/'+message['id'],
-			 params={'access_token': access_token,'format': 'full'}
+			 params={'access_token': access_token,'format': 'raw'}
 			)
-		print json.loads(response.text)
+		print 'sup'
+		message = json.loads(response.text)
+		print message
 		break
 
 def sync(request):
@@ -62,6 +65,8 @@ def sync(request):
 
 
 '''
+
+
 
 			query = 'youtu.be'
 			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
