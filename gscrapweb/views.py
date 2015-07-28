@@ -6,6 +6,7 @@ import requests
 import json
 import base64
 import re
+import urlparse
 # Create your views here.
 
 def home(request):
