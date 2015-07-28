@@ -57,6 +57,10 @@ def sync(request):
 					fetch_and_parse_url_from_messages(youtube_emails['messages'],google.extra_data['access_token'])
 			else:
 				print json.loads(response.text)
+	return render_to_response('sync.html')
+
+	
+
 '''
 
 			query = 'youtu.be'
@@ -76,11 +80,7 @@ def sync(request):
 				print soundcloud_emails
 			else:
 				print json.loads(response.text)
-'''
-			
 
-		return render_to_response('sync.html')
-		'''
 		google = request.user.social_auth.get(provider='google-oauth2')
 		if google: 
 			access_token = google['access_token']
