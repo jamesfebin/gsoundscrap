@@ -26,9 +26,9 @@ def home(request):
 
 def fetch_from_gmail(access_token,email,query,start,end):
 	access_token = google.extra_data['access_token']
-			response = requests.get(
-			    'https://www.googleapis.com/gmail/v1/users/'+email+'/messages',
-			    params={'access_token': 'ya29.vgFEY0uezVNr7Zmtusrwr51VZzVLq83xH6D-oEpjC2uI3NnUddDp3XIQbvmWrk2tJX_bjw','q': query + ' after:'+start +' before:'+end}
+	response = requests.get(
+			'https://www.googleapis.com/gmail/v1/users/'+email+'/messages',
+			 params={'access_token': 'ya29.vgFEY0uezVNr7Zmtusrwr51VZzVLq83xH6D-oEpjC2uI3NnUddDp3XIQbvmWrk2tJX_bjw','q': query + ' after:'+start +' before:'+end}
 			)
 	return response
 
