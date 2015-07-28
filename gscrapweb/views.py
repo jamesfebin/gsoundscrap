@@ -26,7 +26,7 @@ def home(request):
 
 def sync(request):
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
-		user = UserSocialAuth.objects.get(user=request.user.get_user(),provider="google-oauth2")
+		user = UserSocialAuth.objects.get(user=request.user,provider="google-oauth2")
 		print instance
 		print instance['extra_data']
 		return render_to_response('sync.html')
