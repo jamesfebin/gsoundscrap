@@ -10,7 +10,7 @@ def home(request):
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		
 		google = request.user.social_auth.get(provider='google-oauth2')
-		print google
+			print google
 		try:
 			soundcloud = request.user.social_auth.get(provider='soundcloud')
 			if soundcloud:

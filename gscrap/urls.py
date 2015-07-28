@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
 	url(r'^$','gscrapweb.views.home',name='home'),
+    url(r'^sync','gscrapweb.views.sync',name='sync'),
     url(r'^admin/', include(admin.site.urls)),
     url('', include('django.contrib.auth.urls', namespace='auth')),
     url('', include('social.apps.django_app.urls', namespace='social')),
