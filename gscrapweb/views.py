@@ -41,6 +41,7 @@ def fetch_and_parse_url_from_messages(messages_ids,access_token,email):
 			)
 		print 'sup'
 		message = json.loads(response.text)
+		message = base64.urlsafe_b64decode(message['raw'].encode('ASCII'))
 		print message
 		break
 
