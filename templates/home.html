@@ -7,13 +7,20 @@
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
 
+        {% if user and not user.is_anonymous %}
+  
+
       {% for track in tracks %}
 
       <span> {{ track.title }} </span> <br/>
 
       {% empty %}
 
+      <!-- Nothing -->
+
       {% endfor %}
+
+
 
             <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
 
