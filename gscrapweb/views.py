@@ -60,7 +60,7 @@ def remove_tags(text):
 	TAG_RE = re.compile(r'<[^>]+>')
 	return TAG_RE.sub('', text)
 
-def fetch_youtube_video_info(url,user_id):
+def fetch_youtube_video_info(url,user):
 	response = requests.get(
 			'http://www.youtube.com/oembed',
 			 params={'url': url,'format': 'json'}
@@ -82,14 +82,14 @@ def fetch_youtube_video_info(url,user_id):
 			author_url = youtube_details['author_url']
 			print author_url
 		try:
-			track = Tracks.objects.get(link=url,user_id=user_id)
+			track = Tracks.objects.get(link=url,user_id=user)
 		except Tracks.DoesNotExist:
-			Tracks.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user_id)
+			Tracks.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user)
 
 
 
 
-def fetch_youtube_video_ids(messages_ids,access_token,email,user_id):
+def fetch_youtube_video_ids(messages_ids,access_token,email,user):
 	for message in messages_ids:
 		response = requests.get(
 			'https://www.googleapis.com/gmail/v1/users/'+email+'/messages/'+message['id'],
@@ -102,7 +102,7 @@ def fetch_youtube_video_ids(messages_ids,access_token,email,user_id):
 		message = message.replace('\r',' ')
 		urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
 		for url in urls:
-			fetch_youtube_video_info(url,user_id)
+			fetch_youtube_video_info(url,user)
 '''
 video_id = parse_video_id(url) 
 if video_id != '':
@@ -125,7 +125,7 @@ def sync(request):
 			if response.status_code == 200:
 				youtube_emails = json.loads(response.text)
 				if 'messages' in youtube_emails:
-					fetch_youtube_video_ids(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user.id)
+					fetch_youtube_video_ids(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user)
 			else:
 				print json.loads(response.text)
 	return render_to_response('sync.html')
