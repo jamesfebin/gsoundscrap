@@ -23,7 +23,7 @@ def home(request):
 			#Nothing to worry , Sound cloud isn't connected
 			print e
 
-	tracks = Track.objects.filter(user_id=request.user)
+	tracks = Track.objects.filter(user_id=request.user.id)
 
 	context = RequestContext(request,
                            {'user': request.user,'soundcloud':soundcloud,'tracks':tracks})
