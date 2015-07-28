@@ -32,7 +32,7 @@ def fetch_from_gmail(access_token,email,query,start,end):
 			)
 	return response
 
-def fetch_and_parse_url_from_messages(messages_ids,access_token):
+def fetch_and_parse_url_from_messages(messages_ids,access_token,email):
 	for message in messages_ids:
 		response = requests.get(
 			'https://www.googleapis.com/gmail/v1/users/'+email+'/messages/'+message['id'],
@@ -54,7 +54,7 @@ def sync(request):
 			if response.status_code == 200:
 				youtube_emails = json.loads(response.text)
 				if 'messages' in youtube_emails:
-					fetch_and_parse_url_from_messages(youtube_emails['messages'],google.extra_data['access_token'])
+					fetch_and_parse_url_from_messages(youtube_emails['messages'],google.extra_data['access_token'],google.uid)
 			else:
 				print json.loads(response.text)
 	return render_to_response('sync.html')
@@ -68,7 +68,7 @@ def sync(request):
 			if response.status_code == 200:
 				youtube_emails = json.loads(response.text)
 				if 'messages' in youtube_emails:
-					fetch_and_parse_url_from_messages(youtube_emails['messages'],google.extra_data['access_token'])
+					fetch_and_parse_url_from_messages(youtube_emails['messages'],google.extra_data['access_token'],google.uid)
 			else:
 				print json.loads(response.text)
 
