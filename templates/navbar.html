@@ -12,12 +12,6 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-          {% if not user %}
-           <li> <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}"> Signin </a> </li>
-          {% else %}
-          <li> <span > SignedIn as {{ user.get_full_name|default:user.username }} </li>
-          {% endif %}
-
           </ul>
          
         </div><!--/.nav-collapse -->
