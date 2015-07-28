@@ -69,7 +69,6 @@ def fetch_youtube_video_info(url,user):
 			'http://www.youtube.com/oembed',
 			 params={'url': url,'format': 'json'}
 			)
-
 	if response.status_code == 200:
 		youtube_details = json.loads(response.text)
 		title = thumbnail = author_url = author_name = html = ''
@@ -92,6 +91,31 @@ def fetch_youtube_video_info(url,user):
 		except Track.DoesNotExist:
 			Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user,embed=html)
 
+	response = requests.get(
+			'http://soundcloud.com/oembed',
+			 params={'url': url,'format': 'json'}
+			)
+	if response.status_code == 200:
+		soundcloud_details = json.loads(response.text)
+		title = thumbnail = author_url = author_name = html = ''
+		if 'title' in soundcloud_details:
+			title =  soundcloud_details['title'].encode('ascii','ignore') 
+			print title
+		if 'thumbnail_url' in soundcloud_details:
+			thumbnail = soundcloud_details['thumbnail_url']
+			print thumbnail
+		if 'author_name' in soundcloud_details:
+			author_name = soundcloud_details['author_name']
+			print author_name
+		if 'author_url' in soundcloud_details:
+			author_url = soundcloud_details['author_url']
+			print author_url
+		if 'html' in soundcloud_details:
+			html = soundcloud_details['html']
+		try:
+			track = Track.objects.get(link=url,user_id=user)
+		except Track.DoesNotExist:
+			Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='soundcloud',link=url,user_id=user,embed=html)
 
 
 
@@ -119,7 +143,7 @@ else:
 '''
 
 def sync(request):
-	
+
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		google = UserSocialAuth.objects.get(user=request.user,provider="google-oauth2")
 		if google:
