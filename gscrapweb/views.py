@@ -95,12 +95,15 @@ def fetch_youtube_video_ids(messages_ids,access_token,email):
 		message = message.replace('\r',' ')
 		urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
 		for url in urls:
-			video_id = parse_video_id(url) 
-			if video_id != '':
-				print video_id
-				print url
-			else:
-				print url
+			fetch_youtube_video_info(url)
+'''
+video_id = parse_video_id(url) 
+if video_id != '':
+	print video_id
+	print url
+else:
+	print url
+'''
 
 def sync(request):
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
