@@ -119,12 +119,13 @@ else:
 '''
 
 def sync(request):
+	
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		google = UserSocialAuth.objects.get(user=request.user,provider="google-oauth2")
 		if google:
-		
-			start = '2010/01/01'
-			end = '2015/06/30'
+			
+			start = request.GET.get('from')
+			end = request.GET.get('end')
 			query = 'youtube.com'
 
 			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)

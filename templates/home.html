@@ -2,23 +2,93 @@
 {% extends 'base.html' %} 
 
 {% block content %}
+ <script >
+ $(document).ready(function(){
+     $( "#from" ).datepicker();
+      $( "#till" ).datepicker();
+
+      $('#scrapMails').click(function() {
+
+        var from_date = $( "#from" ).datepicker( "getDate" );
+        var till_date = $( "#till" ).datepicker( "getDate" );
+
+        if(from_date == null || till_date == null)
+        {
+          alert("Please select dates");
+          return;
+        }
+
+        var from = from_date.getFullYear()+'/'+from_date.getMonth() + '/'+ from_date.getDate();
+        var end = till_date.getFullYear()+'/'+till_date.getMonth() + '/' + till_date.getDate();
+        alert("Scraping has started in background.")
+        $.get(
+            "/sync",
+            {from : from, end : end},
+            function(data) {
+              console.log('done');
+             //  alert('page content: ' + data);
+            }
+        );
+
+      });
+
+    });
+
+  
+
+  </script>
+<!--  '''
+  $(function() {
+  });
+''' -->
+
+
    <div class="container">
 
+          {% if  user and not user.is_anonymous %}
+          <ol class="breadcrumb">
+          <form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">From</label>
+    <input type="text" class="form-control" id="from" placeholder="2015/04/30">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Till</label>
+    <input type="text" class="form-control" id="till" placeholder="2015/04/30">
+  </div>
+ 
+  <a  id="scrapMails" class="btn btn-default">Scrap Emails</a>
+</form>
+</ol>
+
+  {% endif %}
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
+      <div class="jumbotron" id="tracks">
 
         {% if user and not user.is_anonymous %}
-  
+     <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
 
       {% for track in tracks %}
 
-      <span> {{ track.title }} </span> <br/>
+        <div class="col-md-4">
+          <p><img src="{{track.thumbnail}}"  class="img-thumbnail"></p>
+          <p>{{track.title}} </p>
+          <p> <a class="btn btn-danger" href="{{track.link}}" role="button">Watch Video</a>
+          <p><a class="btn btn-default" href="{{track.author_link}}" role="button">{{track.author}}</a></p>
+        </div>
+   
 
       {% empty %}
 
       <!-- Nothing -->
 
       {% endfor %}
+
+          </div>
+      </div>
+
 
 
 
