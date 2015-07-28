@@ -14,3 +14,4 @@ class Track(models.Model):
 	title = models.TextField()
 	link = models.TextField()
 	thumbnail = models.TextField()
+	embed = models.TextField(default='')

@@ -22,8 +22,12 @@ def home(request):
 		except Exception, e:
 			#Nothing to worry , Sound cloud isn't connected
 			print e
+
+	tracks = Track.objects.filter(user=request.user)
+
 	context = RequestContext(request,
-                           {'user': request.user,'soundcloud':soundcloud})
+                           {'user': request.user,'soundcloud':soundcloud,'tracks':tracks})
+
 	return render_to_response('home.html',context_instance=context)
 
 
@@ -68,7 +72,7 @@ def fetch_youtube_video_info(url,user):
 
 	if response.status_code == 200:
 		youtube_details = json.loads(response.text)
-		title = thumbnail = author_url = author_name = ''
+		title = thumbnail = author_url = author_name = html = ''
 		if 'title' in youtube_details:
 			title =  youtube_details['title'].encode('ascii','ignore') 
 			print title
@@ -81,10 +85,12 @@ def fetch_youtube_video_info(url,user):
 		if 'author_url' in youtube_details:
 			author_url = youtube_details['author_url']
 			print author_url
+		if 'html' in youtube_details:
+			html = youtube_details['html']
 		try:
 			track = Track.objects.get(link=url,user_id=user)
 		except Track.DoesNotExist:
-			Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user)
+			Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user,embed=html)
 
 
 

@@ -6,18 +6,14 @@
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1>GSCRAP</h1>
 
-        {% if user and not user.is_anonymous %}
-    <p> Hello {{ user.get_full_name|default:user.username }}! </p>
+      {% for track in tracks %}
 
-     	{% if not soundcloud %}
-          <a class="btn btn-lg btn-primary" href="/login/soundcloud">Connect Your SoundCloud Account</a>
-          {% else %}
+      <span> {{ track.title }} </span> <br/>
 
-          <p> Sound Cloud Account is linked :) </p>
-          {% endif %}
+      {% empty %}
 
+      {% endfor %}
 
             <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
 
