@@ -25,10 +25,9 @@ def home(request):
 
 
 def fetch_from_gmail(access_token,email,query,start,end):
-	access_token = google.extra_data['access_token']
 	response = requests.get(
 			'https://www.googleapis.com/gmail/v1/users/'+email+'/messages',
-			 params={'access_token': 'ya29.vgFEY0uezVNr7Zmtusrwr51VZzVLq83xH6D-oEpjC2uI3NnUddDp3XIQbvmWrk2tJX_bjw','q': query + ' after:'+start +' before:'+end}
+			 params={'access_token': access_token,'q': query + ' after:'+start +' before:'+end}
 			)
 	return response
 
@@ -36,14 +35,12 @@ def fetch_from_gmail(access_token,email,query,start,end):
 def sync(request):
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		google = UserSocialAuth.objects.get(user=request.user,provider="google-oauth2")
-		print google.extra_data
-		print google.uid
-
-		start = '2010/01/01'
-		end = '2015/06/30'
-		query = 'youtube.com'
-
 		if google:
+		
+			start = '2010/01/01'
+			end = '2015/06/30'
+			query = 'youtube.com'
+
 			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
 			if response.status == 200:
 				youtube_emails = json.loads(response.text)
