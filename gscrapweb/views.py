@@ -41,7 +41,7 @@ def parse_video_id(value):
     - http://www.youtube.com/embed/SA2iWivDJiE
     - http://www.youtube.com/v/SA2iWivDJiE?version=3&amp;hl=en_US
     """
-    query = urlparse(value)
+    query = urlparse.urlparse(value)
     if query.hostname == 'youtu.be':
         return query.path[1:]
     if query.hostname in ('www.youtube.com', 'youtube.com'):
