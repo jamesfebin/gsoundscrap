@@ -10,7 +10,9 @@ def home(request):
 	soundcloud = False
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		print request.user.get_username()	
+		print 'sup'
 		print request.user	
+		print 'yup'
 		try:
 			soundcloud = request.user.social_auth.get(provider='soundcloud')
 			if soundcloud:
@@ -28,6 +30,10 @@ def home(request):
 
 def sync(request):
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
+		instance = UserSocialAuth.objects.get(username=request.user.get_username())
+		print instance
+		return render_to_response('sync.html')
+		'''
 		google = request.user.social_auth.get(provider='google-oauth2')
 		if google: 
 			access_token = google['access_token']
@@ -35,5 +41,6 @@ def sync(request):
 			    'https://www.googleapis.com/gmail/v1/users/jamesfebin%40gmail.com/messages',
 			    params={'access_token': 'ya29.vgFEY0uezVNr7Zmtusrwr51VZzVLq83xH6D-oEpjC2uI3NnUddDp3XIQbvmWrk2tJX_bjw','q':' boutline after:2010/01/01 before:2015/06/30'}
 			)
+		'''
 
 
