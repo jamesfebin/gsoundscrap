@@ -46,7 +46,7 @@ def parse_video_id(value):
         return query.path[1:]
     if query.hostname in ('www.youtube.com', 'youtube.com'):
         if query.path == '/watch':
-            p = parse_qs(query.query)
+            p = urlparse.parse_qs(query.query)
             return p['v'][0]
         if query.path[:7] == '/embed/':
             return query.path.split('/')[2]
