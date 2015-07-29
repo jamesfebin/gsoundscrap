@@ -27,7 +27,7 @@ import os
 
 db_url = os.environ.get("DATABASE_URL", DEFAULT_DB)
 
-DEFAULT_AMQP = "amqp://guest:guest@localhost//"
+DEFAULT_AMQP = "amqp://lnfogmlr:elBl0nIBIOGfra0peHciWtWZaZfw7pTr@owl.rmq.cloudamqp.com/lnfogmlr"
 app = Celery("tasks", backend=db_url.replace("postgres://", "db+postgresql://"),
              broker=os.environ.get("CLOUDAMQP_URL", DEFAULT_AMQP))
 app.BROKER_POOL_LIMIT = 1
