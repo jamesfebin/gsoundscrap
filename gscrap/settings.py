@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import dj_database_url
 
+DEFAULT_DB = "postgres://localhost"
+
 DATABASES = {'default': dj_database_url.config(default=DEFAULT_DB)}
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -21,7 +23,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 import os
 
-DEFAULT_DB = "postgres://localhost"
 db_url = os.environ.get("DATABASE_URL", DEFAULT_DB)
 
 DEFAULT_AMQP = "amqp://guest:guest@localhost//"
