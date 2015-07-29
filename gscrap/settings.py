@@ -33,7 +33,7 @@ app = Celery("tasks", backend=db_url.replace("postgres://", "db+postgresql://"),
 app.BROKER_POOL_LIMIT = 1
 '''
 
-
+CELERY_EAGER_PROPAGATES_EXCEPTIONS=True
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
