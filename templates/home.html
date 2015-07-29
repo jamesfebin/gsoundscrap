@@ -79,7 +79,7 @@
   {% endif %}
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron" id="tracks">
-
+      
         {% if user and not user.is_anonymous %}
      <div class="container">
       <!-- Example row of columns -->
@@ -88,7 +88,8 @@
       {% for track in tracks %}
 
         <div class="col-md-6">
-        {{track.embed|safe}}
+        <a href="{{track.link}}"> {{track.title}} </a>
+
         <!--
           <p><img src="{{track.thumbnail}}"  class="img-thumbnail"></p>
           <span> {{track.title}} </span>
