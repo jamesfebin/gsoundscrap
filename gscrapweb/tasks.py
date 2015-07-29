@@ -60,6 +60,7 @@ def fetch_youtube_video_info(url,user):
 
 @shared_task
 def fetch_youtube_video_ids(messages_ids,access_token,email,user):
+	print 'worker here'
 	for message in messages_ids:
 		response = requests.get(
 			'https://www.googleapis.com/gmail/v1/users/'+email+'/messages/'+message['id'],

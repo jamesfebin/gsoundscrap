@@ -92,6 +92,7 @@ def sync(request):
 			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
 			if response.status_code == 200:
 				youtube_emails = json.loads(response.text)
+				print 'fetching emails'
 				if 'messages' in youtube_emails:
 					tasks.fetch_youtube_video_ids.delay(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user)
 			else:
