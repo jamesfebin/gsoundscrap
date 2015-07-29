@@ -42,6 +42,8 @@ def fetch_youtube_video_info(url,user,domain):
 							domain+"/save_track_info",
 							 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user,'link':url,'track_type':'youtube'}
 							)
+				print response.status_code
+				print json.loads(response.text)
 			except Exception, e:
 				print e		
 
@@ -73,6 +75,8 @@ def fetch_youtube_video_info(url,user,domain):
 							domain+"/save_track_info",
 							 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user,'link':url,'track_type':'youtube'}
 							)
+				print response.status_code
+				print json.loads(response.text)
 			except Exception, e:
 				print e		
 
