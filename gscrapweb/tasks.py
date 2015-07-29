@@ -39,7 +39,7 @@ def fetch_youtube_video_info(url,user,domain):
 			if 'html' in youtube_details:
 				html = youtube_details['html']
 			try:
-					track = Track.objects.get(link=link,user_id=user.id)
+					track = Track.objects.get(link=url,user_id=user.id)
 			except Track.DoesNotExist:
 					try:
 						Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',url=link,user_id=user,embed=html)
