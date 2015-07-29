@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from celery import shared_task
 from gscrapweb.models import Track
+from bs4 import BeautifulSoup
 import requests
 import json
 import base64
@@ -139,13 +140,19 @@ def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 			)
 			message = json.loads(response.text)
 			message = base64.urlsafe_b64decode(message['raw'].encode('UTF-8'))
+			'''
 			message = remove_tags(message)
 			message = message.replace('\n',' ')
 			message = message.replace('\r',' ')
 			urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
+			
 			for url in urls:
 				print 'Scrapping URL'
 				print url
+			'''
+			soup=BeautifulSoup(message)
+			for a in soup.find_all('a', href=True):
+				url=a['href']
 				fetch_youtube_video_info(url,user,domain)
 		except Exception, e:
 			print e
