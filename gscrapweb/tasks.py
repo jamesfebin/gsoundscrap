@@ -1,6 +1,12 @@
 from __future__ import absolute_import
 from celery import shared_task
-
+from models import Track
+import tasks
+import requests
+import json
+import base64
+import re
+import urlparse
 
 
 @shared_task
