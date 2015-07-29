@@ -7,8 +7,7 @@ import json
 import base64
 import re
 import urlparse
-
-
+import quopri
 
 def remove_tags(text):
 	TAG_RE = re.compile(r'<[^>]+>')
@@ -139,6 +138,14 @@ def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 			 params={'access_token': access_token,'format': 'raw'}
 			)
 			message = json.loads(response.text)
+			message = base64.urlsafe_b64decode(message['raw'].encode('latin-1'))
+			message = quopri.decodestring(message)
+			urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
+			for url in urls:
+				print url
+				fetch_youtube_video_info(url,user,domain)
+			'''
+			message = json.loads(response.text)
 			message = base64.urlsafe_b64decode(message['raw'].encode('UTF-8'))
 			message = remove_tags(message)
 			message = message.replace('\n',' ')
@@ -149,7 +156,6 @@ def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 				print 'Scrapping URL'
 				print url
 				fetch_youtube_video_info(url,user,domain)
-			'''
 			soup=BeautifulSoup(message,"html.parser")
 			for a in soup.find_all('a', href=True):
 				print a
