@@ -74,9 +74,17 @@ else:
 '''
 
 def sync(request):
-	#domain = request.META['HTTP_HOST']
+	domain = request.META['HTTP_HOST']
 	domain = request.get_full_path()
 	print domain
+	print 'is secure'
+	print request.is_secure()
+	if request.is_secure():
+		domain = 'http://'+domain
+	else:
+		domain = 'https://'+domain
+
+		
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		google = UserSocialAuth.objects.get(user=request.user,provider="google-oauth2")
 		if google:
