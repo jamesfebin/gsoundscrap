@@ -50,7 +50,7 @@ def fetch_youtube_video_info(url,user,domain):
 				print e
 				
 
-				'''
+'''
 				response = requests.get(
 							domain+"/save_track_info",
 							 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user,'link':url,'track_type':'youtube'}
@@ -97,7 +97,7 @@ def fetch_youtube_video_info(url,user,domain):
 
 	except Exception, e:
 			print e
-
+'''
 @shared_task
 def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 	for message in messages_ids:
