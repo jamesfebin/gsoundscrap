@@ -14,8 +14,6 @@ def remove_tags(text):
 	return TAG_RE.sub('', text)
 
 def fetch_youtube_video_info(url,user):
-	print url
-	print 'working'
 	response = requests.get(
 			'http://www.youtube.com/oembed',
 			 params={'url': url,'format': 'json'}
@@ -40,7 +38,12 @@ def fetch_youtube_video_info(url,user):
 		try:
 			track = Track.objects.get(link=url,user_id=user)
 		except Track.DoesNotExist:
-			Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user,embed=html)
+			try:
+				Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user,embed=html)
+			except Exception, e:
+				print e
+		except Exception, e:
+			print e
 
 	response = requests.get(
 			'http://soundcloud.com/oembed',
