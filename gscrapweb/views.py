@@ -88,7 +88,6 @@ def sync(request):
 			print end
 
 			query = 'youtube.com'
-			q = Queue(connection=conn)
 			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
 			if response.status_code == 200:
 				youtube_emails = json.loads(response.text)
