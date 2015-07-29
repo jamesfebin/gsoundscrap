@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
+from django.contrib.sites.models import Site
 from social.apps.django_app.default.models import UserSocialAuth
 from models import Track
 import tasks
@@ -74,7 +75,9 @@ else:
 '''
 
 def sync(request):
-	domain = request.get_host
+	site = Site.objects.get_current()
+	domain = site.domain
+
 	print domain
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		google = UserSocialAuth.objects.get(user=request.user,provider="google-oauth2")
