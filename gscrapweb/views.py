@@ -75,6 +75,7 @@ else:
 
 def sync(request):
 	domain = request.get_host
+	print domain
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		google = UserSocialAuth.objects.get(user=request.user,provider="google-oauth2")
 		if google:
@@ -88,7 +89,6 @@ def sync(request):
 			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
 			if response.status_code == 200:
 				youtube_emails = json.loads(response.text)
-				print 'fetching emails'
 				if 'messages' in youtube_emails:
 					tasks.fetch_youtube_video_ids.delay(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user,domain)
 			else:
