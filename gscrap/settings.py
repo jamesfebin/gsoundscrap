@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import dj_database_url
-
+import sys
 
 DEFAULT_DB = "postgres://localhost"
 
@@ -93,6 +93,9 @@ TEMPLATES = [
         },
     },
 ]
+
+if "celeryd" in sys.argv:
+    DEBUG = False
 
 WSGI_APPLICATION = 'gscrap.wsgi.application'
 
