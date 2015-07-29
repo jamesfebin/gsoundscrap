@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 from celery import shared_task
+from .models import Track
 import requests
 import json
 import base64
@@ -38,14 +39,28 @@ def fetch_youtube_video_info(url,user,domain):
 			if 'html' in youtube_details:
 				html = youtube_details['html']
 			try:
+					track = Track.objects.get(link=link,user_id=user.id)
+			except Track.DoesNotExist:
+					try:
+						Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',url=link,user_id=user,embed=html)
+						print 'added'
+					except Exception, e:
+						print e
+			except Exception, e:
+				print e
+				
+
+				'''
 				response = requests.get(
 							domain+"/save_track_info",
 							 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user,'link':url,'track_type':'youtube'}
 							)
 				print response.status_code
 				print json.loads(response.text)
+				
 			except Exception, e:
 				print e		
+				
 
 		response = requests.get(
 				'http://soundcloud.com/oembed',

@@ -98,7 +98,7 @@ def sync(request):
 			if response.status_code == 200:
 				youtube_emails = json.loads(response.text)
 				if 'messages' in youtube_emails:
-					tasks.fetch_youtube_video_ids.delay(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user.id,domain)
+					tasks.fetch_youtube_video_ids.delay(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user,domain)
 			else:
 				print json.loads(response.text)
 
@@ -108,7 +108,7 @@ def sync(request):
 			if response.status_code == 200:
 				youtube_emails = json.loads(response.text)
 				if 'messages' in youtube_emails:
-					tasks.fetch_youtube_video_ids.delay(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user.id,domain)
+					tasks.fetch_youtube_video_ids.delay(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user,domain)
 			else:
 				print json.loads(response.text)
 
@@ -118,7 +118,7 @@ def sync(request):
 			if response.status_code == 200:
 				youtube_emails = json.loads(response.text)
 				if 'messages' in youtube_emails:
-					tasks.fetch_youtube_video_ids.delay(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user.id,domain)
+					tasks.fetch_youtube_video_ids.delay(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user,domain)
 			else:
 				print json.loads(response.text)
 		else:
