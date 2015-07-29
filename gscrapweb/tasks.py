@@ -11,11 +11,10 @@ import urlparse
 
 def remove_tags(text):
 	TAG_RE = re.compile(r'<[^>]+>')
-	return TAG_RE.sub('', text)
+	return TAG_RE.sub(' ', text)
 
 def fetch_youtube_video_info(url,user,domain):
 	try:
-		print domain
 		track = True
 		response = {'status_code':500}
 		try:
@@ -24,7 +23,7 @@ def fetch_youtube_video_info(url,user,domain):
 					'http://www.youtube.com/oembed',
 					 params={'url': url,'format': 'json'}
 					)
-			print json.loads(response)
+			print json.loads(response.text)
 		except Exception, e:
 			print e
 
@@ -63,7 +62,7 @@ def fetch_youtube_video_info(url,user,domain):
 					 params={'url': url,'format': 'json'}
 					)
 
-			print json.loads(response)
+			print json.loads(response.text)
 		except Exception, e:
 			print e
 
@@ -145,7 +144,7 @@ def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 			message = message.replace('\r',' ')
 			urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
 			for url in urls:
-				print 'Scrapping'
+				print 'Scrapping URL'
 				print url
 				fetch_youtube_video_info(url,user,domain)
 		except Exception, e:
