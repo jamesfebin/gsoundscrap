@@ -117,6 +117,8 @@ def sync(request):
 					tasks.fetch_youtube_video_ids.delay(youtube_emails['messages'],google.extra_data['access_token'],google.uid,request.user)
 			else:
 				print json.loads(response.text)
+		else:
+			print 'Doesnt exist'
 
 	return render_to_response('sync.html')
 
