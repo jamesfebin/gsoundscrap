@@ -48,33 +48,8 @@ def fetch_youtube_video_info(url,user,domain):
 				print json.loads(response.text)
 				
 			except Exception, e:
-				print e		
-				'''
-					track = Track.objects.get(link=url,user_id=user.id)
-			except Track.DoesNotExist:
-					try:
-						t = Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user.id,embed=html)
-						print t
-						print 'added'
-					except Exception, e:
-						print e
-			except Exception, e:
-				print e
-				'''
-	except Exception, e:
-		print e
+				print e	
 
-'''
-				response = requests.get(
-							domain+"/save_track_info",
-							 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user,'link':url,'track_type':'youtube'}
-							)
-				print response.status_code
-				print json.loads(response.text)
-				
-			except Exception, e:
-				print e		
-				
 
 		response = requests.get(
 				'http://soundcloud.com/oembed',
@@ -102,13 +77,45 @@ def fetch_youtube_video_info(url,user,domain):
 			try:
 				response = requests.get(
 							domain+"/save_track_info",
-							 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user,'link':url,'track_type':'youtube'}
+							 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user.id,'link':url,'track_type':'soundcloud'}
 							)
 				print response.status_code
 				print json.loads(response.text)
 			except Exception, e:
 				print e		
 
+
+
+	except Exception, e:
+		print e
+
+'''
+
+	
+					track = Track.objects.get(link=url,user_id=user.id)
+			except Track.DoesNotExist:
+					try:
+						t = Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user.id,embed=html)
+						print t
+						print 'added'
+					except Exception, e:
+						print e
+			except Exception, e:
+				print e
+				'''
+
+				response = requests.get(
+							domain+"/save_track_info",
+							 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user,'link':url,'track_type':'youtube'}
+							)
+				print response.status_code
+				print json.loads(response.text)
+				
+			except Exception, e:
+				print e		
+				
+
+		
 
 '''
 				
