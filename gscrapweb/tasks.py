@@ -13,9 +13,9 @@ def remove_tags(text):
 	TAG_RE = re.compile(r'<[^>]+>')
 	return TAG_RE.sub('', text)
 
-@shared_task
 def fetch_youtube_video_info(url,user):
 	print url
+	print 'working'
 	response = requests.get(
 			'http://www.youtube.com/oembed',
 			 params={'url': url,'format': 'json'}
