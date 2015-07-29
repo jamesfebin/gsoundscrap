@@ -13,13 +13,21 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import dj_database_url
 
-DATABASES = {'default': dj_database_url.config()}
+DATABASES = {'default': dj_database_url.config(default=DEFAULT_DB)}
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 import os
+
+DEFAULT_DB = "postgres://localhost"
+db_url = os.environ.get("DATABASE_URL", DEFAULT_DB)
+
+DEFAULT_AMQP = "amqp://guest:guest@localhost//"
+app = Celery("tasks", backend=db_url.replace("postgres://", "db+postgresql://"),
+             broker=os.environ.get("CLOUDAMQP_URL", DEFAULT_AMQP))
+app.BROKER_POOL_LIMIT = 1
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
