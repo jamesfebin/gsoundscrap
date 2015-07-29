@@ -72,7 +72,6 @@ def fetch_youtube_video_info(url,user,domain):
 				print author_url
 			if 'html' in soundcloud_details:
 				html = soundcloud_details['html']
-			Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='soundcloud',link=url,user_id=user,embed=html)
 
 			try:
 				response = requests.get(
