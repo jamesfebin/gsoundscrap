@@ -119,15 +119,38 @@ def sync(request):
 
 	return render_to_response('sync.html')
 
+def save_track_info(request):
+
+	thumbnail = request.GET.get('thumbnail_url')
+	title = request.GET.get('title')
+	author = request.GET.get('author')
+	author_url = request.GET.get('author_url')
+	embed = request.GET.get('embed')
+	user_id = request.GET.get('user_id')
+	link = request.GET.get('link')
+	track_type = request.GET.get('track_type')
+	try:
+		track = Track.objects.get(link=url,user_id=user)
+	except Track.DoesNotExist:
+			Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author,track_type=track_type,link=link,user_id=user_id,embed=embed)
+	
+
 
 
 '''
 
 def save_track_info(request):
-	user_id = request.GET.get('user')
-	html = request.GET.get('html')
+	thumbnail_url = request.GET.get('thumbnail_url')
 	title = request.GET.get('title')
-	author = request.GET.get('title')
+	author = request.GET.get('author')
+	author_url = request.GET.get('author_url')
+	embed = request.GET.get('embed')
+	user_id = request.GET.get('user_id')
+	link = request.GET.get('link')
+	track_type = request.GET.get('track_type')
+
+
+						 
 
 
 	response = requests.get(

@@ -38,22 +38,12 @@ def fetch_youtube_video_info(url,user,domain):
 		if 'html' in youtube_details:
 			html = youtube_details['html']
 		try:
-			track = Track.objects.get(link=url,user_id=user)
-			print 'track exists'
+			response = requests.get(
+						domain+"/save_track_info",
+						 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user,'link':url,'track_type':'youtube'}
+						)
 		except Track.DoesNotExist:
-			try:
-				Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user,embed=html)
-			except Exception, e:
-				print e
-		except Exception, e:
-			print e
-
-		if not track:
-			Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user,embed=html)
-			print 'track added'
-		else:
-			print 'rask cannot be added'
-
+			pass			
 
 	response = requests.get(
 			'http://soundcloud.com/oembed',
@@ -79,10 +69,12 @@ def fetch_youtube_video_info(url,user,domain):
 		Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='soundcloud',link=url,user_id=user,embed=html)
 
 		try:
-			track = Track.objects.get(link=url,user_id=user)
+			response = requests.get(
+						domain+"/save_track_info",
+						 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user,'link':url,'track_type':'youtube'}
+						)
 		except Track.DoesNotExist:
-			Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='soundcloud',link=url,user_id=user,embed=html)
-
+			pass	
 @shared_task
 def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 	print 'worker here'
