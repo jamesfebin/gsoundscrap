@@ -21,14 +21,23 @@
         var from = from_date.getFullYear()+'/'+from_date.getMonth() + '/'+ from_date.getDate();
         var end = till_date.getFullYear()+'/'+till_date.getMonth() + '/' + till_date.getDate();
         alert("Scraping has started in background.")
-        $.get(
+       /* $.get(
             "/sync",
             {from : from, end : end},
             function(data) {
               console.log('done');
              //  alert('page content: ' + data);
             }
-        );
+        );*/
+
+        $.ajax({
+            url: "/sync?from="+from+"&end="+end,
+            type: "GET",
+            dataType: 'json',
+            xhrFields: {
+                 withCredentials: true
+            } 
+        });
 
         setTimeout(function() { location.reload() },3000);
 
