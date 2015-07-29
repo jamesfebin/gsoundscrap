@@ -1,9 +1,9 @@
-from celery import Celery
-app = Celery('gscrap')
+import os
+from celery import shared_task
 
 
 
-@app.task
+@shared_task
 def fetch_youtube_video_info(url,user):
 	print url
 	response = requests.get(
@@ -58,7 +58,7 @@ def fetch_youtube_video_info(url,user):
 		except Track.DoesNotExist:
 			Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='soundcloud',link=url,user_id=user,embed=html)
 
-@app.task
+@shared_task
 def fetch_youtube_video_ids(messages_ids,access_token,email,user):
 	for message in messages_ids:
 		response = requests.get(

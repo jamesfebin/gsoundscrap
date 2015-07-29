@@ -17,7 +17,7 @@ from celery import Celery
 
 DEFAULT_DB = "postgres://localhost"
 
-DATABASES = {'default': dj_database_url.config(default=DEFAULT_DB)}
+DATABASES = {'default': dj_database_url.config()}
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -25,12 +25,15 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 import os
 
+'''
 db_url = os.environ.get("DATABASE_URL", DEFAULT_DB)
 
 DEFAULT_AMQP = "amqp://lnfogmlr:elBl0nIBIOGfra0peHciWtWZaZfw7pTr@owl.rmq.cloudamqp.com/lnfogmlr"
 app = Celery("tasks", backend=db_url.replace("postgres://", "db+postgresql://"),
              broker=os.environ.get("CLOUDAMQP_URL", DEFAULT_AMQP))
 app.BROKER_POOL_LIMIT = 1
+'''
+
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
