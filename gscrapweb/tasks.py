@@ -63,7 +63,7 @@ def fetch_youtube_video_info(url,user,domain):
 					 params={'url': url,'format': 'json'}
 					)
 
-				print json.loads(response)
+			print json.loads(response)
 		except Exception, e:
 			print e
 
