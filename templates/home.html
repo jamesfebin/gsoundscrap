@@ -18,8 +18,11 @@
           return;
         }
 
-        var from = from_date.getFullYear()+'/'+from_date.getMonth() + '/'+ from_date.getDate();
-        var end = till_date.getFullYear()+'/'+till_date.getMonth() + '/' + till_date.getDate();
+        var from_month = from_date.getMonth() + 1;
+        var to_month = till_date.getMonth() + 1 ;
+
+        var from = from_date.getFullYear()+'/'+ from_month + '/'+ from_date.getDate();
+        var end = till_date.getFullYear()+'/'+ to_month + '/' + till_date.getDate();
         alert("Scraping has started in background.")
        /* $.get(
             "/sync",
