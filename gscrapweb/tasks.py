@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 from celery import shared_task
+from django.contrib.sites.models import Site
 from .models import Track
 import requests
 import json
@@ -14,6 +15,9 @@ def remove_tags(text):
 	return TAG_RE.sub('', text)
 
 def fetch_youtube_video_info(url,user):
+	current_site = Site.objects.get_current()
+
+	print current_site.domain
 	track = True
 	response = requests.get(
 			'http://www.youtube.com/oembed',
