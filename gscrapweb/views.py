@@ -37,6 +37,8 @@ def fetch_from_gmail(access_token,email,query,start,end):
 			'https://www.googleapis.com/gmail/v1/users/'+email+'/messages',
 			 params={'access_token': access_token,'q': query + ' after:'+start +' before:'+end}
 			)
+	print 'query is here '
+	print query + ' after:'+start +' before:'+end
 	return response
 
 def parse_video_id(value):
