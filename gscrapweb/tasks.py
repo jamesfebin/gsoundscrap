@@ -17,10 +17,17 @@ def fetch_youtube_video_info(url,user,domain):
 	try:
 		print domain
 		track = True
-		response = requests.get(
-				'http://www.youtube.com/oembed',
-				 params={'url': url,'format': 'json'}
-				)
+		response = {status_code:500}
+		try:
+
+			response = requests.get(
+					'http://www.youtube.com/oembed',
+					 params={'url': url,'format': 'json'}
+					)
+			print json.loads(response)
+		except Exception, e:
+			print e
+
 		if response.status_code == 200:
 			youtube_details = json.loads(response.text)
 			title = thumbnail = author_url = author_name = html = ''
@@ -50,11 +57,16 @@ def fetch_youtube_video_info(url,user,domain):
 			except Exception, e:
 				print e	
 
+		try:
+			response = requests.get(
+					'http://soundcloud.com/oembed',
+					 params={'url': url,'format': 'json'}
+					)
 
-		response = requests.get(
-				'http://soundcloud.com/oembed',
-				 params={'url': url,'format': 'json'}
-				)
+				print json.loads(response)
+		except Exception, e:
+			print e
+
 		if response.status_code == 200:
 			soundcloud_details = json.loads(response.text)
 			title = thumbnail = author_url = author_name = html = ''
@@ -133,6 +145,8 @@ def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 			message = message.replace('\r',' ')
 			urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
 			for url in urls:
+				print 'Scrapping'
+				print url
 				fetch_youtube_video_info(url,user,domain)
 		except Exception, e:
 			print e
