@@ -122,6 +122,13 @@ def sync(request):
 
 '''
 
+def save_track_info(request):
+	user_id = request.GET.get('user')
+	html = request.GET.get('html')
+	title = request.GET.get('title')
+	author = request.GET.get('title')
+
+
 	response = requests.get(
 			'https://www.googleapis.com/gmail/v1/users/jamesfebin%40gmail.com/messages/14c6735174c40b02',
 			 params={'access_token': 'ya29.vgFgiO_EJBS7MD12iKu7894OxZ8I3nVouT6PIEr5lFK1bSQejCNQw6TME_oTbSuzpZJC2g','format': 'raw'}
