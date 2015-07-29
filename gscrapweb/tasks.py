@@ -140,7 +140,6 @@ def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 			)
 			message = json.loads(response.text)
 			message = base64.urlsafe_b64decode(message['raw'].encode('UTF-8'))
-			'''
 			message = remove_tags(message)
 			message = message.replace('\n',' ')
 			message = message.replace('\r',' ')
@@ -149,13 +148,15 @@ def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 			for url in urls:
 				print 'Scrapping URL'
 				print url
+				fetch_youtube_video_info(url,user,domain)
 			'''
 			soup=BeautifulSoup(message,"html.parser")
 			for a in soup.find_all('a', href=True):
 				print a
 				url=a['href']
 				print url
-				fetch_youtube_video_info(url,user,domain)
+			'''
+
 		except Exception, e:
 			print e
 	print 'Completed'
