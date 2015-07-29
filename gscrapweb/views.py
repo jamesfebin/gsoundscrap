@@ -61,9 +61,6 @@ def parse_video_id(value):
     # fail?
     return ''
 
-def remove_tags(text):
-	TAG_RE = re.compile(r'<[^>]+>')
-	return TAG_RE.sub('', text)
 
 
 

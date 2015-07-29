@@ -8,6 +8,11 @@ import re
 import urlparse
 
 
+
+def remove_tags(text):
+	TAG_RE = re.compile(r'<[^>]+>')
+	return TAG_RE.sub('', text)
+
 @shared_task
 def fetch_youtube_video_info(url,user):
 	print url
