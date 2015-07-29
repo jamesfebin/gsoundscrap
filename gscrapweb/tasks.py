@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 from celery import shared_task
-from .models import Track
+from models import Track
 import requests
 import json
 import base64
@@ -42,8 +42,7 @@ def fetch_youtube_video_info(url,user,domain):
 					track = Track.objects.get(link=url,user_id=user.id)
 			except Track.DoesNotExist:
 					try:
-						p= Track(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user,embed=html)
-						print p.save()
+						Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user,embed=html)
 						print 'added'
 					except Exception, e:
 						print e
