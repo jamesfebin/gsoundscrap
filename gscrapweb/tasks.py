@@ -150,9 +150,11 @@ def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 				print 'Scrapping URL'
 				print url
 			'''
-			soup=BeautifulSoup(message)
+			soup=BeautifulSoup(message,"html.parser")
 			for a in soup.find_all('a', href=True):
+				print a
 				url=a['href']
+				print url
 				fetch_youtube_video_info(url,user,domain)
 		except Exception, e:
 			print e
