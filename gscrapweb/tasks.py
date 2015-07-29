@@ -14,10 +14,8 @@ def remove_tags(text):
 	TAG_RE = re.compile(r'<[^>]+>')
 	return TAG_RE.sub('', text)
 
-def fetch_youtube_video_info(url,user):
-	current_site = Site.objects.get_current()
+def fetch_youtube_video_info(url,user,domain):
 
-	print current_site.domain
 	track = True
 	response = requests.get(
 			'http://www.youtube.com/oembed',
@@ -87,7 +85,7 @@ def fetch_youtube_video_info(url,user):
 			Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='soundcloud',link=url,user_id=user,embed=html)
 
 @shared_task
-def fetch_youtube_video_ids(messages_ids,access_token,email,user):
+def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 	print 'worker here'
 	for message in messages_ids:
 		response = requests.get(
@@ -101,5 +99,5 @@ def fetch_youtube_video_ids(messages_ids,access_token,email,user):
 		message = message.replace('\r',' ')
 		urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
 		for url in urls:
-			fetch_youtube_video_info(url,user)
+			fetch_youtube_video_info(url,user,domain)
 	return 'done'
