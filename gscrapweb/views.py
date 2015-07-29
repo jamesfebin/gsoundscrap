@@ -138,7 +138,7 @@ def save_track_info(request):
 	track_type = request.GET.get('track_type')
 	print 'Trying to add'
 	try:
-		track = Track.objects.get(link=link,user_id=user)
+		track = Track.objects.get(link=link,user_id=user_id)
 	except Track.DoesNotExist:
 		print 'added'
 		Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author,track_type=track_type,link=link,user_id=user_id,embed=embed)
