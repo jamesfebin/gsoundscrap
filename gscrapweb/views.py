@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from social.apps.django_app.default.models import UserSocialAuth
 from models import Track
+import tasks
 import requests
 import json
 import base64

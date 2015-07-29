@@ -1,3 +1,3 @@
 web: gunicorn gscrap.wsgi --timeout 400 --log-file -
-worker: celery worker --app=gscrapweb.tasks
+worker: python manage.py celery -A proj worker -l info
 
