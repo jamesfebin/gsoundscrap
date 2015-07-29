@@ -17,7 +17,7 @@ def fetch_youtube_video_info(url,user,domain):
 	try:
 		print domain
 		track = True
-		response = {status_code:500}
+		response = {'status_code':500}
 		try:
 
 			response = requests.get(
