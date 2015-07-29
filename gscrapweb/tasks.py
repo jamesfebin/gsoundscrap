@@ -42,7 +42,8 @@ def fetch_youtube_video_info(url,user,domain):
 					track = Track.objects.get(link=url,user_id=user.id)
 			except Track.DoesNotExist:
 					try:
-						Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user,embed=html)
+						t = Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user,embed=html)
+						print t
 						print 'added'
 					except Exception, e:
 						print e
