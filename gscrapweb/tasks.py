@@ -48,7 +48,8 @@ def fetch_youtube_video_info(url,user,domain):
 						print e
 			except Exception, e:
 				print e
-				
+	except Exception, e:
+		print e
 
 '''
 				response = requests.get(
@@ -95,9 +96,9 @@ def fetch_youtube_video_info(url,user,domain):
 			except Exception, e:
 				print e		
 
-	except Exception, e:
-			print e
+
 '''
+				
 @shared_task
 def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 	for message in messages_ids:
