@@ -132,7 +132,7 @@ def save_track_info(request):
 	try:
 		track = Track.objects.get(link=url,user_id=user)
 	except Track.DoesNotExist:
-			Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author,track_type=track_type,link=link,user_id=user_id,embed=embed)
+		Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author,track_type=track_type,link=link,user_id=user_id,embed=embed)
 	
 
 
