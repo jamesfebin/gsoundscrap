@@ -61,6 +61,12 @@
    <div class="container">
 
           {% if  user and not user.is_anonymous %}
+
+      <div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+ App under testing. Database resets are bound to happen.
+</div>
+
           <ol class="breadcrumb">
           <form class="form-inline">
   <div class="form-group">
@@ -73,6 +79,10 @@
   <a  id="scrapMails" class="btn btn-default"> <span class="glyphicon glyphicon-scissors"  aria-hidden="true"> </span> Scrap Emails</a>
   <a  style="float:right" href="{% url 'social:begin' 'soundcloud' %}?next={{ request.path }}" class="btn btn-default"> <span class="glyphicon glyphicon-music"  aria-hidden="true"> </span> Integrate SoundCloud</a>
 
+
+ <a  style="float:right" href="{% url 'auth:logout' %}?next={{ request.path }}" class="btn btn-default"> <span class="glyphicon glyphicon-off"  aria-hidden="true"> </span> </a>
+
+ 
   <br/>
 </form>
 </ol>
@@ -80,10 +90,6 @@
   {% endif %}
       <!-- Main component for a primary marketing message or call to action -->
 
-      <div class="alert alert-warning alert-dismissible" role="alert">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
- App under testing. Database resets are bound to happen.
-</div>
 
    {% if user and not user.is_anonymous %}
       <div class="jumbotron" id="tracks">
@@ -133,18 +139,20 @@
       </div>
 
 
-
-
-            <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
-
       </div>
 
            {% else %}
-
-        <p class="lead"> Start by connecting your gmail account</p>
+ 
+ <center>
+<div class="jumbotron" style="margin-top:0px">
+        <h1>GSCRAP</h1>
+        <p class="lead">Hard to find those youtube,soundcloud links lost in your email. Give the heavy lifting to us. While you enjoy the music :) </p>
+      </div>
         <p>
-          <a class="btn btn-lg btn-primary" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login with Google</a>
+          <a class="btn btn-lg btn-primary" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Sign up today</a>
         </p>
+</center>
+
          
   {% endif %}
     </div> <!-- /container -->
