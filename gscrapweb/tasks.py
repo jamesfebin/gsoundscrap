@@ -14,7 +14,7 @@ def remove_tags(text):
 	return TAG_RE.sub(' ', text)
 
 def fetch_youtube_video_info(url,user,domain):
-	if 'soundcloud' in domain or 'youtube' in domain or 'youtu.be' in domain:
+	if 'soundcloud' in url or 'youtube' in url or 'youtu.be' in url:
 		try:
 			track = True
 			response = {'status_code':500}
