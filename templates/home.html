@@ -58,6 +58,7 @@
 ''' -->
 
 
+     <div class="container">
 
           {% if  user and not user.is_anonymous %}
 
@@ -93,7 +94,6 @@
 
    {% if user and not user.is_anonymous %}
      
-     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
 
@@ -150,13 +150,6 @@
 
 
           </div>
-      </div>
-<footer class="flooter">
- <div class="alert alert-warning alert-dismissible" role="alert" >
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
- App under testing. Database resets are bound to happen.
-</div>
- </footer>
 
            {% else %}
  
@@ -178,9 +171,14 @@
 </center>
 
 
-      
-
-         
+             
   {% endif %}
+</div>
+<footer class="flooter">
+ <div class="alert alert-warning alert-dismissible" role="alert" >
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+ App under testing. Database resets are bound to happen.
+</div>
+ </footer>
 
 {% endblock %}
