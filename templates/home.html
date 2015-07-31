@@ -115,7 +115,7 @@
               {% if track.track_type == "soundcloud" %}
                {% if soundcloud == True %}
 
-        <button type="button" id="like" class="btn btn-warning" aria-label="Left Align">
+        <button type="button" id="like" class="btn btn-success" aria-label="Left Align">
           <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
         </button>
            <button type="button" id="follow" class="btn btn-primary" aria-label="Left Align">
@@ -124,7 +124,7 @@
         {% endif %}
         {% else %}
 
-         <a class="btn btn-success" href="{{track.link}}">
+         <a class="btn btn-warning" href="{{track.link}}">
           <span class="glyphicon glyphicon-play-circle
 " aria-hidden="true"></span>
         </a>
