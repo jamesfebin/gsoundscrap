@@ -16,12 +16,12 @@ import urlparse
 
 def home(request):
 	tracks = []
-	soundcloud = False
+	soundcloud_auth = False
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		try:
-			soundcloud = UserSocialAuth.objects.get(user=request.user,provider="soundcloud")
-			if soundcloud:
-				soundcloud = True
+			soundcloud_auth = UserSocialAuth.objects.get(user=request.user,provider="soundcloud")
+			if soundcloud_auth:
+				soundcloud_auth = True
 		except Exception, e:
 			#Nothing to worry , Sound cloud isn't connected
 			print e
@@ -29,7 +29,7 @@ def home(request):
 		tracks = Track.objects.filter(user_id=request.user.id)
 
 	context = RequestContext(request,
-                           {'user': request.user,'soundcloud':soundcloud,'tracks':tracks})
+                           {'user': request.user,'soundcloud':soundcloud_auth,'tracks':tracks})
 
 	return render_to_response('home.html',context_instance=context)
 
