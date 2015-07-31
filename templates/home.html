@@ -8,11 +8,9 @@
       $( "#till" ).datepicker();
 
       $(".like").click(function(event) {
-        console.log(event.target);
 
         var url = event.target.value;
         console.log(url);
-                 console.log(event.target.val())
 
         $.ajax({
             url: "/like_track?url="+url,
@@ -28,7 +26,7 @@
       });
 
       $(".follow").click(function(event) {
-        var url = event.target.val;
+        var url = event.target.value;
         console.log(url);
 
         $.ajax({
@@ -183,13 +181,9 @@
           {% endif %}
           <p><a class="btn btn-default" href="{{track.author_link}}" role="button">{{track.author}}</a></p>
           -->
+
         </div>
-    <br/>
-                    <br/>
- <br/>
-                    <br/>
- <br/>
-                    <br/>
+   
 
       {% empty %}
 
@@ -199,7 +193,12 @@
 
 
       {% endfor %}
-
+ <br/>
+                    <br/>
+ <br/>
+                    <br/>
+ <br/>
+                    <br/>
 
 
           </div>
