@@ -183,7 +183,7 @@ def like_track(request):
 			soundcloud_data = UserSocialAuth.objects.get(user=request.user,provider="soundcloud")	
 			if soundcloud_data:
 				client = soundcloud.Client(access_token=soundcloud_data.extra_data['access_token'])
-				response = client.put('/me/favorites/'+str(track.id)
+				response = client.put('/me/favorites/'+str(track.id))
 				print json.loads(response.text)
 	except Exception, e:
 		print e
