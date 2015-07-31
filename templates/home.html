@@ -87,6 +87,10 @@
 </form>
 </ol>
 
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  App under development. Database resets are bound to happen.
+</div>
 
 
   {% endif %}
@@ -109,6 +113,7 @@
         <br/>
          <br/>
               {% if track.track_type == "soundcloud" %}
+               {% if soundcloud == False %}
 
         <button type="button" id="like" class="btn btn-default" aria-label="Left Align">
           <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
@@ -116,6 +121,7 @@
            <button type="button" id="follow" class="btn btn-default" aria-label="Left Align">
           <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
         </button> 
+        {% endif %}
         {% else %}
 
          <a class="btn btn-default" href="{{track.link}}">
