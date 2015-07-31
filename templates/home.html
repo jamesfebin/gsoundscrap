@@ -7,9 +7,13 @@
      $( "#from" ).datepicker();
       $( "#till" ).datepicker();
 
-      $("#like").click(function(event) {
-        var url = event.target.val;
+      $(".like").click(function(event) {
+        console.log(event.target);
+
+        var url = event.target.value;
         console.log(url);
+                 console.log(event.target.val())
+
         $.ajax({
             url: "/like_track?url="+url,
             type: "GET",
@@ -23,7 +27,7 @@
 
       });
 
-      $("#follow").click(function(event) {
+      $(".follow").click(function(event) {
         var url = event.target.val;
         console.log(url);
 
@@ -149,10 +153,10 @@
               {% if track.track_type == "soundcloud" %}
                {% if soundcloud == True %}
 
-        <button type="button" id="like" value="{{track.link}}" class="btn btn-success" aria-label="Left Align">
+        <button type="button" id="like" value="{{track.link}}" class="btn btn-success like" aria-label="Left Align">
           <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
         </button>
-           <button type="button" id="follow" value="{{track.author_url}}"  class="btn btn-primary" aria-label="Left Align">
+           <button type="button" id="follow" value="{{track.author_url}}"  class="btn btn-primary follow" aria-label="Left Align">
           <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
         </button> 
         {% endif %}
@@ -180,18 +184,18 @@
           <p><a class="btn btn-default" href="{{track.author_link}}" role="button">{{track.author}}</a></p>
           -->
         </div>
-   
+    <br/>
+                    <br/>
+ <br/>
+                    <br/>
+ <br/>
+                    <br/>
 
       {% empty %}
 
       <!-- Nothing -->
 
-       <br/>
-                    <br/>
- <br/>
-                    <br/>
- <br/>
-                    <br/>
+
 
 
       {% endfor %}
