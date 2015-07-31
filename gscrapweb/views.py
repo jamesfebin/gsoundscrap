@@ -160,9 +160,9 @@ def follow_user(request):
 		client = soundcloud.Client(client_id=SOUNDCLOUD_KEY)
 		soundcloud_user = client.get('/resolve', url=url)
 		if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
-			soundcloud = UserSocialAuth.objects.get(user=request.user,provider="soundcloud")	
-			if soundcloud:
-				client = soundcloud.Client(access_token=soundcloud.extra_data['access_token'])
+			soundcloud_data = UserSocialAuth.objects.get(user=request.user,provider="soundcloud")	
+			if soundcloud_data:
+				client = soundcloud.Client(access_token=soundcloud_data.extra_data['access_token'])
 				response = client.put('/me/followings/'+soundcloud_user.id)
 				print json.loads(response.text)
 	except Exception, e:
@@ -180,9 +180,9 @@ def like_track(request):
 		client = soundcloud.Client(client_id=SOUNDCLOUD_KEY)
 		track = client.get('/resolve', url=url)
 		if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
-			soundcloud = UserSocialAuth.objects.get(user=request.user,provider="soundcloud")	
-			if soundcloud:
-				client = soundcloud.Client(access_token=soundcloud.extra_data['access_token'])
+			soundcloud_data = UserSocialAuth.objects.get(user=request.user,provider="soundcloud")	
+			if soundcloud_data:
+				client = soundcloud.Client(access_token=soundcloud_data.extra_data['access_token'])
 				response = client.put('/me/favorites/'+track.id)
 				print json.loads(response.text)
 	except Exception, e:
