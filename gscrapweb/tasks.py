@@ -14,90 +14,94 @@ def remove_tags(text):
 	return TAG_RE.sub(' ', text)
 
 def fetch_youtube_video_info(url,user,domain):
-	try:
-		track = True
-		response = {'status_code':500}
+	if 'soundcloud' in domain or 'youtube' in domain or 'youtu.be' in domain:
 		try:
-
-			response = requests.get(
-					'http://www.youtube.com/oembed',
-					 params={'url': url,'format': 'json'}
-					)
-			print json.loads(response.text)
-		except Exception, e:
-			print e
-
-		if response.status_code == 200:
-			youtube_details = json.loads(response.text)
-			title = thumbnail = author_url = author_name = html = ''
-			if 'title' in youtube_details:
-				title =  youtube_details['title'].encode('ascii','ignore') 
-				print title
-			if 'thumbnail_url' in youtube_details:
-				thumbnail = youtube_details['thumbnail_url']
-				print thumbnail
-			if 'author_name' in youtube_details:
-				author_name = youtube_details['author_name']
-				print author_name
-			if 'author_url' in youtube_details:
-				author_url = youtube_details['author_url']
-				print author_url
-			if 'html' in youtube_details:
-				html = youtube_details['html']
+			track = True
+			response = {'status_code':500}
 			try:
-				
+
 				response = requests.get(
-							domain+"/save_track_info",
-							 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user.id,'link':url,'track_type':'youtube'}
-							)
-				print response.status_code
+						'http://www.youtube.com/oembed',
+						 params={'url': url,'format': 'json'}
+						)
 				print json.loads(response.text)
-				
 			except Exception, e:
-				print e	
+				print e
 
-		try:
-			response = requests.get(
-					'http://soundcloud.com/oembed',
-					 params={'url': url,'format': 'json'}
-					)
-
-			print json.loads(response.text)
-		except Exception, e:
-			print e
-
-		if response.status_code == 200:
-			soundcloud_details = json.loads(response.text)
-			title = thumbnail = author_url = author_name = html = ''
-			if 'title' in soundcloud_details:
-				title =  soundcloud_details['title'].encode('ascii','ignore') 
-				print title
-			if 'thumbnail_url' in soundcloud_details:
-				thumbnail = soundcloud_details['thumbnail_url']
-				print thumbnail
-			if 'author_name' in soundcloud_details:
-				author_name = soundcloud_details['author_name']
-				print author_name
-			if 'author_url' in soundcloud_details:
-				author_url = soundcloud_details['author_url']
-				print author_url
-			if 'html' in soundcloud_details:
-				html = soundcloud_details['html']
+			if response.status_code == 200:
+				youtube_details = json.loads(response.text)
+				title = thumbnail = author_url = author_name = html = ''
+				if 'title' in youtube_details:
+					title =  youtube_details['title'].encode('ascii','ignore') 
+					print title
+				if 'thumbnail_url' in youtube_details:
+					thumbnail = youtube_details['thumbnail_url']
+					print thumbnail
+				if 'author_name' in youtube_details:
+					author_name = youtube_details['author_name']
+					print author_name
+				if 'author_url' in youtube_details:
+					author_url = youtube_details['author_url']
+					print author_url
+				if 'html' in youtube_details:
+					html = youtube_details['html']
+				try:
+					
+					response = requests.get(
+								domain+"/save_track_info",
+								 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user.id,'link':url,'track_type':'youtube'}
+								)
+					print response.status_code
+					print json.loads(response.text)
+					
+				except Exception, e:
+					print e	
 
 			try:
 				response = requests.get(
-							domain+"/save_track_info",
-							 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user.id,'link':url,'track_type':'soundcloud'}
-							)
-				print response.status_code
+						'http://soundcloud.com/oembed',
+						 params={'url': url,'format': 'json'}
+						)
+
 				print json.loads(response.text)
 			except Exception, e:
-				print e		
+				print e
+
+			if response.status_code == 200:
+				soundcloud_details = json.loads(response.text)
+				title = thumbnail = author_url = author_name = html = ''
+				if 'title' in soundcloud_details:
+					title =  soundcloud_details['title'].encode('ascii','ignore') 
+					print title
+				if 'thumbnail_url' in soundcloud_details:
+					thumbnail = soundcloud_details['thumbnail_url']
+					print thumbnail
+				if 'author_name' in soundcloud_details:
+					author_name = soundcloud_details['author_name']
+					print author_name
+				if 'author_url' in soundcloud_details:
+					author_url = soundcloud_details['author_url']
+					print author_url
+				if 'html' in soundcloud_details:
+					html = soundcloud_details['html']
+
+				try:
+					response = requests.get(
+								domain+"/save_track_info",
+								 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user.id,'link':url,'track_type':'soundcloud'}
+								)
+					print response.status_code
+					print json.loads(response.text)
+				except Exception, e:
+					print e		
 
 
 
-	except Exception, e:
-		print e
+		except Exception, e:
+			print e
+	else:
+		pass
+		
 
 '''
 
