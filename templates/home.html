@@ -9,7 +9,7 @@
 
       $("#like").click(function(event) {
         var url = event.target.value;
-
+        console.log(url);
         $.ajax({
             url: "/like_track?url="+url,
             type: "GET",
@@ -25,6 +25,7 @@
 
       $("#follow").click(function(event) {
         var url = event.target.value;
+        console.log(url);
 
         $.ajax({
             url: "/follow_user?url="+url,
