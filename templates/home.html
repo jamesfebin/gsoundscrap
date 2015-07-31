@@ -184,10 +184,10 @@
               {% if track.track_type == "soundcloud" %}
                {% if soundcloud == True %}
 
-        <button type="button" id="like" value="{{track.link}}" class="btn btn-success" onclick="like({{track.link}});" aria-label="Left Align">
+        <button type="button" id="like" value="{{track.link}}" class="btn btn-success" onclick="like('{{track.link}}');" aria-label="Left Align">
           <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
         </button>
-           <button type="button" id="follow" value="{{track.author_link}}"  onclick="like({{track.author_link}});" class="btn btn-primary" aria-label="Left Align">
+           <button type="button" id="follow" value="{{track.author_link}}"  onclick="follow('{{track.author_link}}');" class="btn btn-primary" aria-label="Left Align">
           <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
         </button> 
         {% endif %}
