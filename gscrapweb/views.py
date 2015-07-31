@@ -173,7 +173,7 @@ def follow_user(request):
 	
 
 
-def like_track(url):
+def like_track(request):
 	try:
 		url = request.GET.get('url')
 		SOUNDCLOUD_KEY = settings.SOCIAL_AUTH_SOUNDCLOUD_KEY
