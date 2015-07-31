@@ -71,14 +71,14 @@
     <input type="text" class="form-control" id="till" placeholder="Till Date">
   </div>
 
-  <a  id="scrapMails" class="btn btn-default"> <span class="glyphicon glyphicon-scissors"  aria-hidden="true"> </span> Scrap Emails</a>
+  <a  id="scrapMails" class="btn btn-info"> <span class="glyphicon glyphicon-scissors"  aria-hidden="true"> </span> Scrap Emails</a>
 
 <div class="form-group pull-right">
 
  {% if soundcloud == False %}
-  <a href="/login/soundcloud/?next=/" class="btn btn-default"> <span class="glyphicon glyphicon-music" aria-hidden="true"> </span> Integrate SoundCloud</a>
+  <a href="/login/soundcloud/?next=/" class="btn btn-primary"> <span class="glyphicon glyphicon-music" aria-hidden="true"> </span> Integrate SoundCloud</a>
  {% endif %}
-  <a href="/logout/?next=/" class="btn btn-default"> <span class="glyphicon glyphicon-off" aria-hidden="true"> </span> </a>
+  <a href="/logout/?next=/" class="btn btn-danger"> <span class="glyphicon glyphicon-off" aria-hidden="true"> </span> </a>
 
 </div>
 
@@ -115,16 +115,16 @@
               {% if track.track_type == "soundcloud" %}
                {% if soundcloud == True %}
 
-        <button type="button" id="like" class="btn btn-default" aria-label="Left Align">
+        <button type="button" id="like" class="btn btn-primary" aria-label="Left Align">
           <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
         </button>
-           <button type="button" id="follow" class="btn btn-default" aria-label="Left Align">
+           <button type="button" id="follow" class="btn btn-success" aria-label="Left Align">
           <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
         </button> 
         {% endif %}
         {% else %}
 
-         <a class="btn btn-default" href="{{track.link}}">
+         <a class="btn btn-success" href="{{track.link}}">
           <span class="glyphicon glyphicon-play-circle
 " aria-hidden="true"></span>
         </a>
