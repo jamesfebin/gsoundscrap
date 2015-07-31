@@ -7,6 +7,39 @@
      $( "#from" ).datepicker();
       $( "#till" ).datepicker();
 
+      $("#like").click(function(event) {
+        var url = event.target.value;
+
+        $.ajax({
+            url: "/like_track?url="+url,
+            type: "GET",
+            dataType: 'json',
+            xhrFields: {
+                 withCredentials: true
+            } 
+        });
+
+      }).done(function( data ) {
+          console.log('done');
+        });
+
+      $("#follow").click(function(event) {
+        var url = event.target.value;
+
+        $.ajax({
+            url: "/follow_user?url="+url,
+            type: "GET",
+            dataType: 'json',
+            xhrFields: {
+                 withCredentials: true
+            } 
+        });
+
+      }).done(function( data ) {
+          console.log('done');
+        });
+
+
       $('#scrapMails').click(function() {
 
         var from_date = $( "#from" ).datepicker( "getDate" );
@@ -115,10 +148,10 @@
               {% if track.track_type == "soundcloud" %}
                {% if soundcloud == True %}
 
-        <button type="button" id="like" class="btn btn-success" aria-label="Left Align">
+        <button type="button" id="like" value="{{track.link}}" class="btn btn-success" aria-label="Left Align">
           <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
         </button>
-           <button type="button" id="follow" class="btn btn-primary" aria-label="Left Align">
+           <button type="button" id="follow" value="{{track.author_url}}"  class="btn btn-primary" aria-label="Left Align">
           <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
         </button> 
         {% endif %}

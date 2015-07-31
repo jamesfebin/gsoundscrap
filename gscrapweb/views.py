@@ -2,14 +2,17 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from social.apps.django_app.default.models import UserSocialAuth
+from django.conf import settings
 from models import Track
 import tasks
 import requests
 import json
+import soundcloud
 import base64
 import re
 import urlparse
 # Create your views here.
+
 
 def home(request):
 	tracks = []
@@ -150,6 +153,42 @@ def save_track_info(request):
 		print e
 
 
+def follow_user(request):
+	try:
+		url = requestGET.get('url')
+		SOUNDCLOUD_KEY = settings.SOCIAL_AUTH_SOUNDCLOUD_KEY
+		client = soundcloud.Client(client_id=SOUNDCLOUD_KEY)
+		soundcloud_user = client.get('/resolve', url=url)
+		if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
+			soundcloud = UserSocialAuth.objects.get(user=request.user,provider="soundcloud")	
+			if soundcloud:
+				client = soundcloud.Client(access_token=soundcloud.extra_data['access_token'])
+				response = client.put('/me/followings/'+soundcloud_user.id)
+				print json.loads(response.text)
+	except Exception, e:
+		print e
+
+	return render_to_response('sync.html')
+
+	
+
+
+def like_track(url):
+	try:
+		url = requestGET.get('url')
+		SOUNDCLOUD_KEY = settings.SOCIAL_AUTH_SOUNDCLOUD_KEY
+		client = soundcloud.Client(client_id=SOUNDCLOUD_KEY)
+		track = client.get('/resolve', url=url)
+		if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
+			soundcloud = UserSocialAuth.objects.get(user=request.user,provider="soundcloud")	
+			if soundcloud:
+				client = soundcloud.Client(access_token=soundcloud.extra_data['access_token'])
+				response = client.put('/me/favorites/'+track.id)
+				print json.loads(response.text)
+	except Exception, e:
+		print e
+
+	return render_to_response('sync.html')
 
 '''
 
