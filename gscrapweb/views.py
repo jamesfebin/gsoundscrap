@@ -155,7 +155,7 @@ def save_track_info(request):
 
 def follow_user(request):
 	try:
-		url = requestGET.get('url')
+		url = request.GET.get('url')
 		SOUNDCLOUD_KEY = settings.SOCIAL_AUTH_SOUNDCLOUD_KEY
 		client = soundcloud.Client(client_id=SOUNDCLOUD_KEY)
 		soundcloud_user = client.get('/resolve', url=url)
@@ -175,7 +175,7 @@ def follow_user(request):
 
 def like_track(url):
 	try:
-		url = requestGET.get('url')
+		url = request.GET.get('url')
 		SOUNDCLOUD_KEY = settings.SOCIAL_AUTH_SOUNDCLOUD_KEY
 		client = soundcloud.Client(client_id=SOUNDCLOUD_KEY)
 		track = client.get('/resolve', url=url)

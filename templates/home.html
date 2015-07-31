@@ -8,7 +8,7 @@
       $( "#till" ).datepicker();
 
       $("#like").click(function(event) {
-        var url = event.target.value;
+        var url = event.target.val;
         console.log(url);
         $.ajax({
             url: "/like_track?url="+url,
@@ -24,7 +24,7 @@
       });
 
       $("#follow").click(function(event) {
-        var url = event.target.value;
+        var url = event.target.val;
         console.log(url);
 
         $.ajax({
@@ -121,9 +121,9 @@
 </form>
 </ol>
 
-<div class="alert alert-info alert-dismissible" role="alert">
+<div class="alert alert-info alert-dismissible" role="alert" style="position:fixed;width:100%;bottom:0;margin-bottom:0">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  App under development. Database resets are bound to happen.
+ <span id="message"> App under development. Database resets are bound to happen. </span>
 </div>
 
 
@@ -132,7 +132,7 @@
 
 
    {% if user and not user.is_anonymous %}
-     <div class="container">
+     <div class="container" style="height:60%;overflow:scroll">
       <!-- Example row of columns -->
       <div class="row">
 
