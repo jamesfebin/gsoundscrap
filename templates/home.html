@@ -72,10 +72,11 @@
   </div>
 
   <a  id="scrapMails" class="btn btn-default"> <span class="glyphicon glyphicon-scissors"  aria-hidden="true"> </span> Scrap Emails</a>
+   <a  style="float:right" href="{% url 'auth:logout' %}?next={{ request.path }}" class="btn btn-default"> <span class="glyphicon glyphicon-off"  aria-hidden="true"> </span> </a>
+
   <a  style="float:right" href="{% url 'social:begin' 'soundcloud' %}?next={{ request.path }}" class="btn btn-default"> <span class="glyphicon glyphicon-music"  aria-hidden="true"> </span> Integrate SoundCloud</a>
 
 
- <a  style="float:right" href="{% url 'auth:logout' %}?next={{ request.path }}" class="btn btn-default"> <span class="glyphicon glyphicon-off"  aria-hidden="true"> </span> </a>
 
  
   <br/>
