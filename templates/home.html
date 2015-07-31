@@ -64,16 +64,17 @@
           <ol class="breadcrumb">
           <form class="form-inline">
   <div class="form-group">
-    <label for="exampleInputEmail1">From </label>
-    <input type="text" class="form-control" id="from" placeholder="2015/04/30">
+    <input type="text" class="form-control" id="from" placeholder="Start Date">
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">Till </label>
-    <input type="text" class="form-control" id="till" placeholder="2015/04/30">
+    <input type="text" class="form-control" id="till" placeholder="End Date">
   </div>
 
-  <a  id="scrapMails" class="btn btn-info">Scrap Emails</a>
-  <a  style="float:right" href="{% url 'social:begin' 'soundcloud' %}?next={{ request.path }}" class="btn btn-danger">Integrate SoundCloud</a>
+  <a  id="scrapMails" class="btn btn-default"> <span class="glyphicon glyphicon-scissors"  aria-hidden="true"> </span> Scrap Emails</a>
+  <a  style="float:right" href="{% url 'social:begin' 'soundcloud' %}?next={{ request.path }}" class="btn btn-default"> <span class="glyphicon glyphicon-music"  aria-hidden="true"> </span> Integrate SoundCloud</a>
+
+  <br/>
 </form>
 </ol>
 
