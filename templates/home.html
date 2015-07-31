@@ -74,8 +74,10 @@
   <a  id="scrapMails" class="btn btn-default"> <span class="glyphicon glyphicon-scissors"  aria-hidden="true"> </span> Scrap Emails</a>
 
 <div class="form-group pull-right">
-  <a href="/login/soundcloud/?next=/" class="btn btn-default"> <span class="glyphicon glyphicon-music" aria-hidden="true"> </span> Integrate SoundCloud</a>
 
+ {% if soundcloud == False %}
+  <a href="/login/soundcloud/?next=/" class="btn btn-default"> <span class="glyphicon glyphicon-music" aria-hidden="true"> </span> Integrate SoundCloud</a>
+ {% endif %}
   <a href="/logout/?next=/" class="btn btn-default"> <span class="glyphicon glyphicon-off" aria-hidden="true"> </span> </a>
 
 </div>
