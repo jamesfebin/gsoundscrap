@@ -143,15 +143,20 @@
 
            {% else %}
  
- <center>
 <div class="jumbotron" style="margin-top:0px">
+ <center>
+
         <h1>GSCRAP</h1>
         <p class="lead">Hard to find those youtube,soundcloud links lost in your email. Give the heavy lifting to us. While you enjoy the music :) </p>
-      </div>
-        <p>
-          <a class="btn btn-lg btn-primary" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Sign up today</a>
+
+          <p>
+          <a class="btn btn-lg btn-success" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Sign up today</a>
         </p>
 </center>
+
+
+      </div>
+      
 
          
   {% endif %}
