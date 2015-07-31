@@ -76,7 +76,7 @@
 <div class="form-group pull-right">
 
  {% if soundcloud == False %}
-  <a href="/login/soundcloud/?next=/" class="btn btn-primary"> <span class="glyphicon glyphicon-music" aria-hidden="true"> </span> Integrate SoundCloud</a>
+  <a href="/login/soundcloud/?next=/" class="btn btn-warning"> <span class="glyphicon glyphicon-music" aria-hidden="true"> </span> Integrate SoundCloud</a>
  {% endif %}
   <a href="/logout/?next=/" class="btn btn-danger"> <span class="glyphicon glyphicon-off" aria-hidden="true"> </span> </a>
 
@@ -115,10 +115,10 @@
               {% if track.track_type == "soundcloud" %}
                {% if soundcloud == True %}
 
-        <button type="button" id="like" class="btn btn-primary" aria-label="Left Align">
+        <button type="button" id="like" class="btn btn-warning" aria-label="Left Align">
           <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
         </button>
-           <button type="button" id="follow" class="btn btn-success" aria-label="Left Align">
+           <button type="button" id="follow" class="btn btn-primary" aria-label="Left Align">
           <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
         </button> 
         {% endif %}
