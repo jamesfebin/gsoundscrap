@@ -29,7 +29,7 @@
       {
 
         $.ajax({
-            url: "/follow_user?url="+url,
+            url: "/like_track?url="+url,
             type: "GET",
             dataType: 'json',
             xhrFields: {
@@ -46,7 +46,7 @@
       {
 
         $.ajax({
-            url: "/like_track?url="+url,
+            url: "/follow_user?url="+url,
             type: "GET",
             dataType: 'json',
             xhrFields: {
@@ -191,16 +191,14 @@
           <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
         </button> 
         {% endif %}
-        <br/>
-                    <br/>
+   
         {% else %}
 
          <a class="btn btn-info" href="{{track.link}}">
           <span class="glyphicon glyphicon-play-circle
 " aria-hidden="true"></span>
         </a>
-<br/>
-                    <br/>
+
 
                   {% endif %}
 
