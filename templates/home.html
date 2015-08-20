@@ -144,13 +144,13 @@
 
 <div class="form-group pull-right">
  {% if prev_page != 0 %}
- <a href="/current_page={{current_page}}"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"> </span> </a>
+ <a href="?current_page={{prev_page}}"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"> </span> </a>
  {% endif %}
 
  <span> {{current_page}} </span>
 
   {% if next_page != 0 %}
- <a href="/current_page={{next_page}}"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"> </span> </a>
+ <a href="?current_page={{next_page}}"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"> </span> </a>
  {% endif %}
 
  {% if soundcloud == False %}
