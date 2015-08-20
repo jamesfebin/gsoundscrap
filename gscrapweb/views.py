@@ -22,6 +22,7 @@ def home(request):
 	next_page = 0
 	prev_page = 0
 	current_page = request.GET.get('current_page',1)
+	current_page = int(current_page)
 	print 'current_page is'
 	print current_page
 
