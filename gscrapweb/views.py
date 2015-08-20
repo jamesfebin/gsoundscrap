@@ -19,6 +19,8 @@ def home(request):
 	tracks = []
 	soundcloud_auth = False
 	pnos=0
+	next_page = 0
+	prev_page = 0
 	current_page = request.GET.get('current_page',1)
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		try:
@@ -32,11 +34,20 @@ def home(request):
 		tracks = Track.objects.filter(user_id=request.user.id)
 		p = Paginator(tracks,10)
 		pnos = p.num_pages
-		page1 = p.page(current_page)
+		if current_page > p.num_pages:
+			current_page = p.num_pages
+		page1 = p.page(current_page) 
 		tracks = page1.object_list
+		next_page = current_page + 1
+		if next_page > p.num_pages:
+			next_page = 0
+
+		prev_page = current_page - 1
+		if prev_page < 0 :
+			prev_page = 0
 
 	context = RequestContext(request,
-                           {'user': request.user,'soundcloud':soundcloud_auth,'tracks':tracks,'pnos':pnos,'current_page':current_page})
+                           {'user': request.user,'soundcloud':soundcloud_auth,'tracks':tracks,'pnos':pnos,'current_page':current_page,'next_page':next_page,'prev_page':prev_page})
 
 	return render_to_response('home.html',context_instance=context)
 
