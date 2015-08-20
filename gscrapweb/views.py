@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from social.apps.django_app.default.models import UserSocialAuth
+from django.core.paginator import Paginator
 from django.conf import settings
 from models import Track
 import tasks
@@ -17,6 +18,8 @@ import urlparse
 def home(request):
 	tracks = []
 	soundcloud_auth = False
+	pnos=0
+	current_page = request.GET.get('current_page',1)
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		try:
 			soundcloud_auth = UserSocialAuth.objects.get(user=request.user,provider="soundcloud")
@@ -27,11 +30,30 @@ def home(request):
 			print e
 
 		tracks = Track.objects.filter(user_id=request.user.id)
+		p = Paginator(tracks,10)
+		pnos = p.num_pages
+		page1 = p.page(current_page)
+		tracks = page1.object_list
 
 	context = RequestContext(request,
-                           {'user': request.user,'soundcloud':soundcloud_auth,'tracks':tracks})
+                           {'user': request.user,'soundcloud':soundcloud_auth,'tracks':tracks,'pnos':pnos,'current_page':current_page})
 
 	return render_to_response('home.html',context_instance=context)
+
+def get_page(request):
+	tracks = []
+	page_no = request.GET.get('page')
+	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
+		try:
+			tracks = Track.objects.filter(user_id=request.user.id)
+			p = Paginator(tracks,10)
+			pnos = p.num_pages
+			page1 = p.page(page_no)
+			tracks = page1.object_list
+		except Exception, e:
+			print e		
+	return tracks
+
 
 
 def fetch_from_gmail(access_token,email,query,start,end):
