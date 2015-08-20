@@ -22,6 +22,9 @@ def home(request):
 	next_page = 0
 	prev_page = 0
 	current_page = request.GET.get('current_page',1)
+	print 'current_page is'
+	print current_page
+
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		try:
 			soundcloud_auth = UserSocialAuth.objects.get(user=request.user,provider="soundcloud")
