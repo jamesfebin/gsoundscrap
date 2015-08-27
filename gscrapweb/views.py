@@ -40,8 +40,9 @@ def home(request):
 		#Try refreshing the token	
 		try: 
 			if soundcloud_auth:
-				strategy = load_strategy(backend='soundcloud')
-				UserSocialAuth.refresh_token(strategy)
+				suser = User.objects.get(id=request.user.id)
+				social = suser.social_auth.get(provider='soundcloud')
+				social.refresh_token(load_strategy())
 		except Exception, e:
 			print 'refresh token error'
 			print e 
