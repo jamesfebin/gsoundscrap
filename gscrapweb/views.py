@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from social.apps.django_app.default.models import UserSocialAuth
+from django.contrib.auth.models import User
 from social.apps.django_app.utils import load_strategy
 from django.core.paginator import Paginator
 from django.conf import settings
