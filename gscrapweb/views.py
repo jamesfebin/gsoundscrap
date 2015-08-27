@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from social.apps.django_app.default.models import UserSocialAuth
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from social.apps.django_app.utils import load_strategy
 from django.core.paginator import Paginator
 from django.conf import settings
@@ -41,6 +41,7 @@ def home(request):
 		#Try refreshing the token	
 		try: 
 			if soundcloud_auth:
+				User = get_user_model()
 				suser = User.objects.get(id=request.user.id)
 				social = suser.social_auth.get(provider='soundcloud')
 				social.refresh_token(load_strategy())
