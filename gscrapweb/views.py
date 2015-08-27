@@ -39,7 +39,7 @@ def home(request):
 
 		#Try refreshing the token	
 		try: 
-			if soundcloud_auth = True :
+			if soundcloud_auth:
 				strategy = load_strategy(backend='soundcloud')
 				UserSocialAuth.refresh_token(strategy)
 		except Exception, e:
