@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from social.apps.django_app.default.models import UserSocialAuth
+from social.apps.django_app.utils import load_strategy
 from django.core.paginator import Paginator
 from django.conf import settings
 from models import Track
@@ -29,11 +30,21 @@ def home(request):
 	if request.user and request.user.is_anonymous() is False and request.user.is_superuser is False:
 		try:
 			soundcloud_auth = UserSocialAuth.objects.get(user=request.user,provider="soundcloud")
+
 			if soundcloud_auth:
 				soundcloud_auth = True
 		except Exception, e:
 			#Nothing to worry , Sound cloud isn't connected
 			print e
+
+		#Try refreshing the token	
+		try: 
+			if soundcloud_auth = True :
+				strategy = load_strategy(backend='soundcloud')
+				UserSocialAuth.refresh_token(strategy)
+		except Exception, e:
+			print 'refresh token error'
+			print e 
 
 		tracks = Track.objects.filter(user_id=request.user.id)
 		p = Paginator(tracks,10)
@@ -79,40 +90,6 @@ def fetch_from_gmail(access_token,email,query,start,end):
 	print 'query 2 is here '
 	print query + ' after:'+start +' before:'+end
 	return response
-
-def parse_video_id(value):
-    """
-    Examples:
-    - http://youtu.be/SA2iWivDJiE
-    - http://www.youtube.com/watch?v=_oPAwA_Udwc&feature=feedu
-    - http://www.youtube.com/embed/SA2iWivDJiE
-    - http://www.youtube.com/v/SA2iWivDJiE?version=3&amp;hl=en_US
-    """
-    query = urlparse.urlparse(value)
-    if query.hostname == 'youtu.be':
-        return query.path[1:]
-    if query.hostname in ('www.youtube.com', 'youtube.com'):
-        if query.path == '/watch':
-            p = urlparse.parse_qs(query.query)
-            return p['v'][0]
-        if query.path[:7] == '/embed/':
-            return query.path.split('/')[2]
-        if query.path[:3] == '/v/':
-            return query.path.split('/')[2]
-    # fail?
-    return ''
-
-
-
-
-'''
-video_id = parse_video_id(url) 
-if video_id != '':
-	print video_id
-	print url
-else:
-	print url
-'''
 
 def sync(request):
 	domain = request.META['HTTP_HOST']
@@ -227,61 +204,6 @@ def like_track(request):
 
 	return render_to_response('sync.html')
 
-'''
 
-def save_track_info(request):
-	thumbnail_url = request.GET.get('thumbnail_url')
-	title = request.GET.get('title')
-	author = request.GET.get('author')
-	author_url = request.GET.get('author_url')
-	embed = request.GET.get('embed')
-	user_id = request.GET.get('user_id')
-	link = request.GET.get('link')
-	track_type = request.GET.get('track_type')
-
-
-						 
-
-
-	response = requests.get(
-			'https://www.googleapis.com/gmail/v1/users/jamesfebin%40gmail.com/messages/14c6735174c40b02',
-			 params={'access_token': 'ya29.vgFgiO_EJBS7MD12iKu7894OxZ8I3nVouT6PIEr5lFK1bSQejCNQw6TME_oTbSuzpZJC2g','format': 'raw'}
-			)
-
-
-
-
-			query = 'youtu.be'
-			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
-			if response.status_code == 200:
-				youtube_emails = json.loads(response.text)
-				if 'messages' in youtube_emails:
-					fetch_and_parse_url_from_messages(youtube_emails['messages'],google.extra_data['access_token'],google.uid)
-			else:
-				print json.loads(response.text)
-
-
-			query = 'soundcloud.com'
-			response = fetch_from_gmail(google.extra_data['access_token'],google.uid,query,start,end)
-			if response.status_code == 200:
-				soundcloud_emails = json.loads(response.text)
-				print soundcloud_emails
-			else:
-				print json.loads(response.text)
-
-		google = request.user.social_auth.get(provider='google-oauth2')
-		if google: 
-			access_token = google['access_token']
-			response = requests.get(
-			    'https://www.googleapis.com/gmail/v1/users/'+email+'/messages',
-			    params={'access_token': 'ya29.vgFEY0uezVNr7Zmtusrwr51VZzVLq83xH6D-oEpjC2uI3NnUddDp3XIQbvmWrk2tJX_bjw','q':' boutline after:2010/01/01 before:2015/06/30'}
-			)
-		access_token = google.extra_data['access_token']
-			response = requests.get(
-			    'https://www.googleapis.com/gmail/v1/users/'+email+'/messages',
-			    params={'access_token': 'ya29.vgFEY0uezVNr7Zmtusrwr51VZzVLq83xH6D-oEpjC2uI3NnUddDp3XIQbvmWrk2tJX_bjw','q':' boutline after:2010/01/01 before:2015/06/30'}
-			)
-		
-		'''
 
 

@@ -103,35 +103,6 @@ def fetch_youtube_video_info(url,user,domain):
 		pass
 
 
-'''
-
-	
-					track = Track.objects.get(link=url,user_id=user.id)
-			except Track.DoesNotExist:
-					try:
-						t = Track.objects.create(title=title,thumbnail=thumbnail,author_link=author_url,author=author_name,track_type='youtube',link=url,user_id=user.id,embed=html)
-						print t
-						print 'added'
-					except Exception, e:
-						print e
-			except Exception, e:
-				print e
-				
-
-				response = requests.get(
-							domain+"/save_track_info",
-							 params={'title': title,'thumbnail_url': thumbnail,'author':author_name,'author_url':author_url,'embed':html,'user_id':user,'link':url,'track_type':'youtube'}
-							)
-				print response.status_code
-				print json.loads(response.text)
-				
-			except Exception, e:
-				print e		
-				
-
-		
-
-'''
 				
 @shared_task
 def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
@@ -148,25 +119,6 @@ def fetch_youtube_video_ids(messages_ids,access_token,email,user,domain):
 			for url in urls:
 				print url
 				fetch_youtube_video_info(url,user,domain)
-			'''
-			message = json.loads(response.text)
-			message = base64.urlsafe_b64decode(message['raw'].encode('UTF-8'))
-			message = remove_tags(message)
-			message = message.replace('\n',' ')
-			message = message.replace('\r',' ')
-			urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
-			
-			for url in urls:
-				print 'Scrapping URL'
-				print url
-				fetch_youtube_video_info(url,user,domain)
-			soup=BeautifulSoup(message,"html.parser")
-			for a in soup.find_all('a', href=True):
-				print a
-				url=a['href']
-				print url
-			'''
-
 		except Exception, e:
 			print e
 	print 'Completed'
